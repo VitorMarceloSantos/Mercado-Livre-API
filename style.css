@@ -1,0 +1,64 @@
+@charset "utf-8";
+*{
+  margin: 0;
+  padding: 0;
+}
+
+/* Header */
+header{
+  height: 10vh;
+
+  display: flex;
+  justify-content: center;
+}
+#container-logo{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15vw;
+}
+#logo-trybe{
+  width: 40%;
+}
+#container-search{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 55vw;
+}
+#container-input{
+  margin-top: 25px;
+  margin-bottom: 5px;
+}
+#container-input #text-search {
+  width: 40vw; /* Tamanho do Input */
+}
+#container-options{
+  width: 30vw;
+  display: flex;
+  justify-content:space-evenly;
+  align-items: center;
+}
+
+/* Body */
+/* Main */
+main{
+  width: 90vw;
+  height: 85vh;
+  margin: auto;
+  background-color: green;
+}
+#products {
+  display: flex;
+  flex-wrap: wrap;
+}
+#products .card{
+  width: 16rem;
+}
+
+/* Footer */
+footer{
+  height: 5vh;
+  background-color: blue;
+}
