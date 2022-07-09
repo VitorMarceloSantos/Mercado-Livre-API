@@ -1,7 +1,8 @@
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch');
+const btnSearch = document.querySelector('#btn-search');
 
 function newCard(product) { // criando o card(bootstrap) via java script
-  const section = document.querySelector("section");
+  const section = document.querySelector("#products");
 
   const divCard = document.createElement("div");
   const img = document.createElement("img");
@@ -12,7 +13,7 @@ function newCard(product) { // criando o card(bootstrap) via java script
 
   divCard.classList.add("card");
   divBody.classList.add("card-body");
-  cardTitle.classList.add("card-title");
+  // cardTitle.classList.add("card-title");
   img.classList.add("card-img-top");
 
   img.src = product.img;
@@ -22,24 +23,45 @@ function newCard(product) { // criando o card(bootstrap) via java script
 
   // divBody.appendChild(cardTitle);
   divCard.appendChild(img);
-  divCard.appendChild
+  divBody.appendChild(descriptionText);
+  divBody.appendChild(priceText);
   divCard.appendChild(divBody);
   section.appendChild(divCard);
 }
 
-const selectCategory = (category) => {
+const cardGroup = (products) => { // adicionando os produtos
+  products.forEach((item) => {
+    newCard(item);
+  });
+}
+
+const categoryURL = (category) => {
   return `https://api.mercadolibre.com/sites/MLB/search?q=${category}`;
 }
 
 const searchProduct = async(category) => {
-  const apiUrl = selectCategory(category);
+  const apiUrl = categoryURL(category);
 
   const object = await fetch(apiUrl);
   const results = await object.json();
   const arraySearch = results.results.map((item) => { // retorna um array de objetos com as propriedades selecionadas
     return { id: item.id,  title: item.title, img: item.thumbnail, price: item.price };
   });
-  // console.log(arraySearch)
-  newCard(arraySearch);
+  cardGroup(arraySearch);
 }
-searchProduct('computador')
+
+const selectCategory = () => {
+  btnSearch.addEventListener('click', () => {
+    const textSearch = document.querySelector('#text-search').value;
+    
+    searchProduct(textSearch);
+    console.log(textSearch)
+  });
+}
+
+window.onload = function () {
+  selectCategory();
+}
+  
+
+
