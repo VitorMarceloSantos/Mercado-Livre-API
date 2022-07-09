@@ -53,10 +53,15 @@ const searchProduct = async(category) => {
 const selectCategory = () => {
   btnSearch.addEventListener('click', () => {
     const textSearch = document.querySelector('#text-search').value;
-    
     searchProduct(textSearch);
-    console.log(textSearch)
   });
+
+  document.addEventListener('keypress', function (e) { // monitora todas as teclas(keys) pressionadas
+    const textSearch = document.querySelector('#text-search').value;
+    if (e.key === "Enter") { // caso a key seja a tecla Enter, vai chamar a função
+     searchProduct(textSearch); // vai passar null como parâmetro
+    }
+  }, false);
 }
 
 window.onload = function () {
