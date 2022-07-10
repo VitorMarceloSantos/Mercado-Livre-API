@@ -71,7 +71,7 @@ const searchProduct = async(category) => {
       } 
       return acc;
     }, '');
-    return { id: item.id,  title: arrayFinal, img: item.thumbnail, price: (item.price).toLocaleString('pt-br', {minimumFractionDigits: 2}) };
+    return { id: item.id,  title: arrayFinal, img: item.thumbnail, price: `R$ ${(item.price).toLocaleString('pt-br', {minimumFractionDigits: 2})}` };
   }); // map
   
 
