@@ -49,12 +49,18 @@ main{
   margin: auto;
   background-color: green;
 }
+/* Cards */
 #products {
   display: flex;
   flex-wrap: wrap;
 }
 #products .card{
   width: 12rem;
+}
+#products .card .div-Description{
+  height: 5rem;
+  font-size: .9em;
+  text-align: center;
 }
 
 /* Footer */

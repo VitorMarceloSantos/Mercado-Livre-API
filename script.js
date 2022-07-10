@@ -12,13 +12,17 @@ function newCard(product) { // criando o card(bootstrap) via java script
   // const cardTitle = document.createElement("h5");
   const btnAdd = document.createElement('button'); // adicionar ao carrinho
   const btnProductView = document.createElement('button'); // ver detalhes do produto
+  const divDescription = document.createElement('div'); // irá armazenar o texo que descreve o elemento
 
   // Adicionando Classes
   divCard.classList.add("card");
   divBody.classList.add("card-body");
   img.classList.add("card-img-top");
-  // btnAdd.classList.add('btn btn-outline-success');
-  // btnProductView.classList.add('btn btn-outline-info')
+  btnAdd.classList.add('btn');
+  btnAdd.classList.add('btn-outline-success');
+  btnProductView.classList.add('btn');
+  btnProductView.classList.add('btn-outline-info');
+  divDescription.classList.add('div-Description');
 
   // Atribuindo valores
   img.src = product.img;
@@ -26,13 +30,14 @@ function newCard(product) { // criando o card(bootstrap) via java script
   priceText.textContent = product.price;
   btnAdd.textContent = 'Adicionar';
   btnProductView.textContent = 'Detalhes';
-
-
- 
+  btnAdd.setAttribute('type', 'button');
+  btnProductView.setAttribute('type', 'button');
+  
 
   // divBody.appendChild(cardTitle);
   divCard.appendChild(img);
-  divBody.appendChild(descriptionText);
+  divDescription.appendChild(descriptionText);
+  divBody.appendChild(divDescription);
   divBody.appendChild(priceText);
   divBody.appendChild(btnAdd);
   divBody.appendChild(btnProductView);
@@ -58,8 +63,18 @@ const searchProduct = async(category) => {
   const object = await fetch(apiUrl);
   const results = await object.json();
   const arraySearch = results.results.map((item) => { // retorna um array de objetos com as propriedades selecionadas
-    return { id: item.id,  title: item.title, img: item.thumbnail, price: item.price };
-  });
+    // Limitar o tamanho da descrição do produto
+    const arrayTemp = (item.title).split(' ');
+    const arrayFinal = arrayTemp.reduce((acc, curr, index) => {
+      if(index < 6){ // o tamanho máximo é 6 palavras
+        return `${acc} ${curr}`; 
+      } 
+      return acc;
+    }, '');
+    return { id: item.id,  title: arrayFinal, img: item.thumbnail, price: (item.price).toLocaleString('pt-br', {minimumFractionDigits: 2}) };
+  }); // map
+  
+
   cardGroup(arraySearch);
   console.log(results)
 }
