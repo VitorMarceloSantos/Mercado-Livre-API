@@ -10,21 +10,32 @@ function newCard(product) { // criando o card(bootstrap) via java script
   const descriptionText = document.createElement('p');
   const priceText = document.createElement('p');
   // const cardTitle = document.createElement("h5");
+  const btnAdd = document.createElement('button'); // adicionar ao carrinho
+  const btnProductView = document.createElement('button'); // ver detalhes do produto
 
+  // Adicionando Classes
   divCard.classList.add("card");
   divBody.classList.add("card-body");
-  // cardTitle.classList.add("card-title");
   img.classList.add("card-img-top");
+  // btnAdd.classList.add('btn btn-outline-success');
+  // btnProductView.classList.add('btn btn-outline-info')
 
+  // Atribuindo valores
   img.src = product.img;
   descriptionText.textContent = product.title;
   priceText.textContent = product.price;
-  // cardTitle.innerHTML = pokemon.name;
+  btnAdd.textContent = 'Adicionar';
+  btnProductView.textContent = 'Detalhes';
+
+
+ 
 
   // divBody.appendChild(cardTitle);
   divCard.appendChild(img);
   divBody.appendChild(descriptionText);
   divBody.appendChild(priceText);
+  divBody.appendChild(btnAdd);
+  divBody.appendChild(btnProductView);
   divCard.appendChild(divBody);
   section.appendChild(divCard);
 }
@@ -37,6 +48,8 @@ const cardGroup = (products) => { // adicionando os produtos
 
 const categoryURL = (category) => {
   return `https://api.mercadolibre.com/sites/MLB/search?q=${category}`;
+  // return `https://api.mercadolibre.com/catalog_products/${category}`  - retornando as caracteristicas do produto por ID(MLB6326752);
+  // https://api.mercadolibre.com/items?ids=MLA599260060&attributes=id,price,category_id,title  - nesse formato vai pegar apenas os atributos necessarios pelo ID do produto
 }
 
 const searchProduct = async(category) => {
@@ -48,6 +61,7 @@ const searchProduct = async(category) => {
     return { id: item.id,  title: item.title, img: item.thumbnail, price: item.price };
   });
   cardGroup(arraySearch);
+  console.log(results)
 }
 
 const selectCategory = () => {
