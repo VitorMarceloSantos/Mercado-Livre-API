@@ -23,6 +23,7 @@ function newCard(product) { // criando o card(bootstrap) via java script
   btnProductView.classList.add('btn');
   btnProductView.classList.add('btn-outline-info');
   divDescription.classList.add('div-Description');
+  priceText.classList.add('price-txt');
 
   // Atribuindo valores
   img.src = product.img;

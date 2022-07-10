@@ -57,9 +57,24 @@ main{
 #products .card{
   width: 12rem;
 }
+
+#products .card .card-body{
+  display: flex;
+  flex-direction: column;
+}
+
+#products .card .card-body .btn{
+ margin-bottom: 5px;
+ font-size: .9em;
+}
 #products .card .div-Description{
   height: 5rem;
   font-size: .9em;
+  text-align: center;
+}
+#products .card .price-txt{
+  font-size: 1.25em;
+  font-weight: bolder;
   text-align: center;
 }
 
