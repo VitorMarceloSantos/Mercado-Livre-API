@@ -1,6 +1,18 @@
 // const fetch = require('node-fetch');
 const btnSearch = document.querySelector('#btn-search');
 
+function productId(e) {
+ 
+  console.log(e.target.id)
+  const searchProduct = async(category) => {
+    const apiUrl = `https://api.mercadolibre.com/catalog_products/${e.target.id}`;
+    const object = await fetch(apiUrl);
+    const results = await object.json();
+    console.log(results)
+  }
+  searchProduct()
+}
+
 function newCard(product) { // criando o card(bootstrap) via java script
   const section = document.querySelector("#products");
 
@@ -12,7 +24,7 @@ function newCard(product) { // criando o card(bootstrap) via java script
   // const cardTitle = document.createElement("h5");
   const btnAdd = document.createElement('button'); // adicionar ao carrinho
   const btnProductView = document.createElement('button'); // ver detalhes do produto
-  const divDescription = document.createElement('div'); // irá armazenar o texo que descreve o elemento
+  const divDescription = document.createElement("div");
 
   // Adicionando Classes
   divCard.classList.add("card");
@@ -44,6 +56,15 @@ function newCard(product) { // criando o card(bootstrap) via java script
   divBody.appendChild(btnProductView);
   divCard.appendChild(divBody);
   section.appendChild(divCard);
+
+ 
+  btnProductView.setAttribute('id',product.id);
+  // Adicionando Eventos a botões
+  btnProductView.addEventListener('click', productId,
+    
+    // const myModal = new bootstrap.Modal(document.getElementById('Modal1'))
+    // myModal.show();
+  );
 }
 
 const cardGroup = (products) => { // adicionando os produtos
@@ -74,8 +95,6 @@ const searchProduct = async(category) => {
     }, '');
     return { id: item.id,  title: arrayFinal, img: item.thumbnail, price: `R$ ${(item.price).toLocaleString('pt-br', {minimumFractionDigits: 2})}` };
   }); // map
-  
-
   cardGroup(arraySearch);
   console.log(results)
 }

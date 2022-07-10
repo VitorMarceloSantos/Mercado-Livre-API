@@ -53,6 +53,7 @@ main{
 #products {
   display: flex;
   flex-wrap: wrap;
+  z-index: 2;
 }
 #products .card{
   width: 12rem;
@@ -76,6 +77,13 @@ main{
   font-size: 1.25em;
   font-weight: bolder;
   text-align: center;
+}
+
+#div-descriptionFull{
+  height: 600px;
+  width: 500px;
+  background-color: red;
+  z-index: 1;
 }
 
 /* Footer */
