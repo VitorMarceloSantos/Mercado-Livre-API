@@ -3,14 +3,20 @@ const btnSearch = document.querySelector('#btn-search');
 
 function productId(e) {
  
-  console.log(e.target.id)
+  // console.log(e.target.id)
   const searchProduct = async(category) => {
-    const apiUrl = `https://api.mercadolibre.com/catalog_products/${e.target.id}`;
+    const apiUrl = `https://api.mercadolibre.com/items/${category}`;
     const object = await fetch(apiUrl);
     const results = await object.json();
     console.log(results)
+
+    const modalTitle = document.querySelector('#ModalTitle');
+    const ModalEspecificacoes = document.querySelector('#ModalEspecificacoes');
+    modalTitle.textContent = 'Especificações Técnicas';
+    const myModal = new bootstrap.Modal(document.getElementById('Modal1'))
+    myModal.show();
   }
-  searchProduct()
+  searchProduct(e.target.id);
 }
 
 function newCard(product) { // criando o card(bootstrap) via java script
@@ -58,12 +64,10 @@ function newCard(product) { // criando o card(bootstrap) via java script
   section.appendChild(divCard);
 
  
-  btnProductView.setAttribute('id',product.id);
+  btnProductView.setAttribute('id',product.id); // o botão detalhes recebe o id do produto
   // Adicionando Eventos a botões
   btnProductView.addEventListener('click', productId,
     
-    // const myModal = new bootstrap.Modal(document.getElementById('Modal1'))
-    // myModal.show();
   );
 }
 
