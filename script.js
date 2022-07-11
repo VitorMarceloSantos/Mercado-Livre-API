@@ -11,8 +11,26 @@ function productId(e) {
     console.log(results)
 
     const modalTitle = document.querySelector('#ModalTitle');
-    const ModalEspecificacoes = document.querySelector('#ModalEspecificacoes');
+    const modalEspecificacoes = document.querySelector('#ModalEspecificacoes');
+    const modalName = document.createElement('p');
+    const img = document.createElement('img');
+    // Zerando as Informações do Modal
+    while (modalEspecificacoes.firstChild) {
+      modalEspecificacoes.removeChild(modalEspecificacoes.firstChild);
+    }
+    // for(let i = 0; i < modalEspecificacoes.childElementCount; i += 1) {
+    //   modalEspecificacoes.
+    // }
     modalTitle.textContent = 'Especificações Técnicas';
+    modalName.textContent = results.title;
+    img.setAttribute('src',results.thumbnail);
+    modalEspecificacoes.appendChild(img);
+    modalEspecificacoes.appendChild(modalName);
+    (results.attributes).forEach((description) => {
+      const text = document.createElement('p');
+      text.textContent = `${description.name}: ${description.value_name}`;
+      modalEspecificacoes.appendChild(text);
+    });
     const myModal = new bootstrap.Modal(document.getElementById('Modal1'))
     myModal.show();
   }
