@@ -8,8 +8,7 @@ function productId(e) {
     const apiUrl = `https://api.mercadolibre.com/items/${category}`;
     const object = await fetch(apiUrl);
     const results = await object.json();
-    console.log(results)
-
+    // Criando Variáveis
     const modalTitle = document.querySelector('#ModalTitle');
     const modalEspecificacoes = document.querySelector('#ModalEspecificacoes');
     const modalName = document.createElement('p');
@@ -18,9 +17,7 @@ function productId(e) {
     while (modalEspecificacoes.firstChild) {
       modalEspecificacoes.removeChild(modalEspecificacoes.firstChild);
     }
-    // for(let i = 0; i < modalEspecificacoes.childElementCount; i += 1) {
-    //   modalEspecificacoes.
-    // }
+    // Adicionando Informações
     modalTitle.textContent = 'Especificações Técnicas';
     modalName.textContent = results.title;
     img.setAttribute('src',results.thumbnail);
@@ -31,6 +28,7 @@ function productId(e) {
       text.textContent = `${description.name}: ${description.value_name}`;
       modalEspecificacoes.appendChild(text);
     });
+    // Criando Modal
     const myModal = new bootstrap.Modal(document.getElementById('Modal1'))
     myModal.show();
   }
