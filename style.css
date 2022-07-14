@@ -7,7 +7,6 @@
 /* Header */
 header{
   height: 10vh;
-
   display: flex;
   justify-content: center;
 }
@@ -42,13 +41,95 @@ header{
 }
 
 /* Body */
+/* Backgroun Color*/
+#container-color {
+  background-color: #EBEBEB;
+}
 /* Main */
 main{
   width: 90vw;
-  /* height: 85vh; - Caber todos os cards na página*/
+  height: 85vh; /* Caber todos os cards na página*/
   margin: auto;
-  background-color: green;
 }
+
+/* Página Inicial */
+#container-initial-page #container-banner{
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  
+}
+#carouselExampleFade {
+  width: 65%;
+  height: 90%;
+  
+}
+
+
+#container-initial-page #container-category{
+  height: 25vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#container-initial-page #container-category #container-figures {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ background-color: white;
+}
+.fa-solid { /* São tratados como texto */
+  font-size: 2.5em;
+  color: #2FC18C;
+}
+.div-figure {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 100px;
+}
+.div-figure:hover {
+  cursor: pointer;
+  background-color: #2FC18C;
+}
+.div-figure:hover .fa-solid{
+  color: white;
+}
+.div-figure:hover p{
+  color: white;
+}
+.div-figure p{
+  font-size: .85em;
+  margin: auto;
+  text-align: center;
+  font-weight: bold;
+}
+
+#container-initial-page #container-category #container-figures-1 {
+  display: flex;
+}
+#container-initial-page #container-category #container-figures-2 {
+  display: flex;
+}
+
+
+
+
+
+#container-initial-page #container-ofertas{
+  height: 15vh;
+  background-color: pink;
+}
+
+#container-initial-page #container-books{
+  height: 15vh;
+  background-color: yellow;
+}
+
+
 /* Cards */
 #products {
   display: flex;
