@@ -30,6 +30,13 @@ header{
   margin-top: 25px;
   margin-bottom: 5px;
 }
+#container-input #btn-search {
+  border: none;
+  background-color: white;
+}
+#container-input .fa-magnifying-glass {
+  font-size: 1.3em;
+}
 #container-input #text-search {
   width: 40vw; /* Tamanho do Input */
 }
@@ -54,14 +61,15 @@ main{
 
 /* Página Inicial */
 #container-initial-page #container-banner{
+  padding: 5px;
   height: 30vh;
   display: flex;
   justify-content: center;
   
 }
 #carouselExampleFade {
-  width: 65%;
-  height: 90%;
+  width: 60%;
+  height: 80%;
   
 }
 
@@ -88,8 +96,8 @@ main{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 120px;
-  height: 100px;
+  width: 130px;
+  height: 110px;
 }
 .div-figure:hover {
   cursor: pointer;

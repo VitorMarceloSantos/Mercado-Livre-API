@@ -50,11 +50,11 @@ function productId(e) { // Detalhes do Produto
     const myModal = new bootstrap.Modal(document.getElementById('Modal1'))
     myModal.show();
   }
-  searchProduct(e.target.id);
+  searchProduct(e.target.id); // chamando a função e passando o parâmetro
 }
 
-function newCard(product) { // criando o card(bootstrap) via java script
-  const section = document.querySelector("#products");
+function newCard(product, local) { // criando o card(bootstrap) via java script
+  const section = document.querySelector(local);
   const divCard = document.createElement("div");
   const img = document.createElement("img");
   const divBody = document.createElement("div");
@@ -106,19 +106,21 @@ function newCard(product) { // criando o card(bootstrap) via java script
 
 const cardGroup = (products) => { // adicionando os produtos
   products.forEach((item) => {
-    newCard(item);
+    newCard(item, '#products'); // passando a localização da criação
   });
 }
 
-const categoryURL = (category) => {
-  return `https://api.mercadolibre.com/sites/MLB/search?q=${category}`;
+const categoryURL = (category, apiSelect) => {
+  if (apiSelect === 'search') {
+    return `https://api.mercadolibre.com/sites/MLB/search?q=${category}`;
+  }
+  return `https://api.mercadolibre.com/items/${category}`
   // return `https://api.mercadolibre.com/catalog_products/${category}`  - retornando as caracteristicas do produto por ID(MLB6326752);
   // https://api.mercadolibre.com/items?ids=MLA599260060&attributes=id,price,category_id,title  - nesse formato vai pegar apenas os atributos necessarios pelo ID do produto
 }
 
-const searchProduct = async(category) => {
-  const apiUrl = categoryURL(category);
-
+const searchProduct = async(category, apiSelect) => {
+  const apiUrl = categoryURL(category, apiSelect);
   const object = await fetch(apiUrl);
   const results = await object.json();
   const arraySearch = results.results.map((item) => { // retorna um array de objetos com as propriedades selecionadas
@@ -140,17 +142,24 @@ const selectCategory = () => {
   btnSearch.addEventListener('click', () => {
     const textSearch = document.querySelector('#text-search').value;
     resetItems();
-    searchProduct(textSearch);
+    searchProduct(textSearch, 'search');
   });
 
   document.addEventListener('keypress', function (e) { // monitora todas as teclas(keys) pressionadas
     const textSearch = document.querySelector('#text-search').value;
     if (e.key === "Enter") { // caso a key seja a tecla Enter, vai chamar a função
-    resetItems();
-     searchProduct(textSearch); // vai passar null como parâmetro
+      resetItems();
+      searchProduct(textSearch, 'search'); // vai passar null como parâmetro
     }
   }, false);
 }
+
+// Criando as ofertas do dia
+// const arrayOfertas = ['MLB15149562','MLB1839514434','MLB1930554131','MLB17801246', 'MLB2678380325', 'MLB18522997', 'MLB18500640', 'MLB15220364', 'MLB1909880047', 'MLB1417521851']; // id de produtos para ser adicionado nas ofertas do dia
+
+// arrayOfertas.forEach((id) => {
+//   searchProduct(id); 
+// });
 
 window.onload = function () {
   selectCategory();
