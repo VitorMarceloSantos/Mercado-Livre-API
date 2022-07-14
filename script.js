@@ -1,9 +1,27 @@
 // const fetch = require('node-fetch');
 const btnSearch = document.querySelector('#btn-search');
+const liNav = document.querySelectorAll('.dropdown-item'); // selecionando todas li da navegação
 
-function productId(e) {
- 
-  // console.log(e.target.id)
+const resetItems = () => { // removendo os itens, para realizar nova buscar sem a necessidade de reinicar a página
+  const section = document.querySelector("#products");
+  if ( section.childElementCount > 0) {
+    while ( section.firstChild) {
+      section.removeChild(section.firstChild);
+    }
+  }
+}
+
+const searchMenu = (category) => { // realizando a busca de acordo com as opções do menu navegação
+  resetItems();
+  searchProduct(category);
+}
+
+liNav.forEach((li) => { // adicionando o escutador de evento em cada um dos elementos do array que contém todas as linhas do menu navegacao
+  li.addEventListener('click', (e) => searchMenu(e.target.textContent));
+})
+
+
+function productId(e) { // Detalhes do Produto
   const searchProduct = async(category) => {
     const apiUrl = `https://api.mercadolibre.com/items/${category}`;
     const object = await fetch(apiUrl);
@@ -37,7 +55,6 @@ function productId(e) {
 
 function newCard(product) { // criando o card(bootstrap) via java script
   const section = document.querySelector("#products");
-
   const divCard = document.createElement("div");
   const img = document.createElement("img");
   const divBody = document.createElement("div");
@@ -116,18 +133,20 @@ const searchProduct = async(category) => {
     return { id: item.id,  title: arrayFinal, img: item.thumbnail, price: `R$ ${(item.price).toLocaleString('pt-br', {minimumFractionDigits: 2})}` };
   }); // map
   cardGroup(arraySearch);
-  console.log(results)
+  // console.log(results)
 }
 
 const selectCategory = () => {
   btnSearch.addEventListener('click', () => {
     const textSearch = document.querySelector('#text-search').value;
+    resetItems();
     searchProduct(textSearch);
   });
 
   document.addEventListener('keypress', function (e) { // monitora todas as teclas(keys) pressionadas
     const textSearch = document.querySelector('#text-search').value;
     if (e.key === "Enter") { // caso a key seja a tecla Enter, vai chamar a função
+    resetItems();
      searchProduct(textSearch); // vai passar null como parâmetro
     }
   }, false);
