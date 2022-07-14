@@ -156,9 +156,9 @@ const selectCategory = () => {
 
 // Criando as ofertas do dia
 // const arrayOfertas = ['MLB15149562','MLB1839514434','MLB1930554131','MLB17801246', 'MLB2678380325', 'MLB18522997', 'MLB18500640', 'MLB15220364', 'MLB1909880047', 'MLB1417521851']; // id de produtos para ser adicionado nas ofertas do dia
-
+// const ofertas = document.querySelector('#container-ofertas');
 // arrayOfertas.forEach((id) => {
-//   searchProduct(id); 
+//   searchProduct(id, 'oferta'); 
 // });
 
 window.onload = function () {
