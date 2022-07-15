@@ -4,6 +4,8 @@ const btnLeftOfertas = document.querySelector('#arrow-left');
 const btnRightOfertas = document.querySelector('#arrow-right');
 const btnLeftOfertasBook = document.querySelector('#arrow-left-books');
 const btnRightOfertasBook = document.querySelector('#arrow-right-books');
+const btnLeftOfertasGames = document.querySelector('#arrow-left-games');
+const btnRightOfertasGames = document.querySelector('#arrow-right-games');
 
 const resetItems = () => { // removendo os itens, para realizar nova buscar sem a necessidade de reinicar a página
   const section = document.querySelector("#products");
@@ -121,7 +123,7 @@ const categoryURL = (category) => {
 }
 
 const lengthResults = (local, resultsArray) => {
-  if ((local === '#container-ofertas') || (local === '#container-books')) { // no container de ofertas vai aparecer somente 10 produtos
+  if ((local === '#container-ofertas') || (local === '#container-books') || (local === '#container-games')) { // no container de ofertas vai aparecer somente 10 produtos
     const resultAlterado = [];
     for (let i = 0; i < 10; i += 1) { // quantidade de produtos = 10
       resultAlterado.push(resultsArray[i]);
@@ -172,17 +174,20 @@ const selectCategory = () => {
 // Criando as ofertas do dia
 const searchOfertas = () => {
   const arrayOfertas = ['Informática','Geek','Esporte','Carros', 'Motos', 'VideoGame', 'Beleza', 'Decoração', 'Celulares', 'Eletrônicos']; // id de produtos para ser adicionado nas ofertas do dia
-  const ofertas = document.querySelector('#container-ofertas');
   const random = arrayOfertas[Math.floor(Math.random()*arrayOfertas.length)]; // seleciona uma categoria aleatóriamente
   searchProduct(random, '#container-ofertas'); 
 }
-
 // Criando as ofertas Livros
 const searchOfertasBook = () => {
-  const arrayOfertas = ['Livro Ficção','Livro Romance','Livro Informática','Livro Policial', 'Livro Cronicas do Gelo e Fogo', 'Livro Senhor dos Aneis', 'Livro Financeiro', 'Livro Auto Ajuda']; // id de produtos para ser adicionado nas ofertas do dia
-  const ofertas = document.querySelector('#container-books');
+  const arrayOfertas = ['Livro Ficção','Livro Romance','Livro Informática','Livro Policial', 'Livro Cronicas do Gelo e Fogo', 'Livro Senhor dos Aneis', 'Livro Financeiro', 'Livro Auto Ajuda']; // id de produtos para ser adicionado
   const random = arrayOfertas[Math.floor(Math.random()*arrayOfertas.length)]; // seleciona uma categoria aleatóriamente
   searchProduct(random, '#container-books'); 
+}
+// Criando as ofertas Games
+const searchOfertasGames = () => {
+  const arrayOfertas = ['Jogos Ps4','Jogos Ps5','Jogos Xbox','PlayStation 4', 'PlayStation 5', 'Xbox', 'Super Nintendo', 'Fliperama', 'Jogos Super Nintendo', 'Acessorios Ps4', 'Acessorios Ps5', 'Acessorios Xbox']; // id de produtos para ser adicionado
+  const random = arrayOfertas[Math.floor(Math.random()*arrayOfertas.length)]; // seleciona uma categoria aleatóriamente
+  searchProduct(random, '#container-games'); 
 }
 const resetItemsOfertas = (local) => { // removendo os itens, para realizar nova buscar sem a necessidade de reinicar a página
   const section = document.querySelector(local);
@@ -208,11 +213,19 @@ const carouselOfertasBook = () => {
 btnLeftOfertasBook.addEventListener('click', carouselOfertasBook);
 btnRightOfertasBook.addEventListener('click', carouselOfertasBook);
 
+// Criando Carousel Games
+const carouselOfertasGames = () => {
+  resetItemsOfertas('#container-games');
+  searchOfertasGames();
+}
+btnLeftOfertasGames.addEventListener('click', carouselOfertasGames);
+btnRightOfertasGames.addEventListener('click', carouselOfertasGames);
 
 window.onload = function () {
   selectCategory();
   searchOfertas();
-  searchOfertasBook()
+  searchOfertasBook();
+  searchOfertasGames();
 }
   
 
