@@ -130,6 +130,7 @@ main{
   width: 80vw;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
+  margin-bottom: 40px;
 }
 .directions {
   border: none;
@@ -177,6 +178,7 @@ main{
   width: 80vw;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
+  margin-bottom: 40px;
 }
 #container-books {
   display: flex;
@@ -216,6 +218,7 @@ main{
   width: 80vw;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
+  margin-bottom: 40px;
 }
 #container-games {
   display: flex;
@@ -249,7 +252,7 @@ main{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 30px 0px;
+  margin: 10px 0px 40px 0px;
 }
 #payments {
   width: 60vw;
@@ -289,6 +292,13 @@ main{
 #payments .fa-solid:hover{
   cursor: pointer;
   text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.404);
+}
+.text-category{
+  font-size: 1em;
+  font-weight: 400;
+  margin-left: 5.8%;
+  line-height: 5px;
+  margin-bottom: 10px;
 }
 
 /* Cards */
@@ -334,6 +344,38 @@ main{
 
 /* Footer */
 footer{
-  height: 5vh;
-  background-color: blue;
+background-color: #2fc18c4b;
+box-shadow: 3px -3px 3px rgba(0, 0, 0, 0.1);
+padding: 10px;
+}
+footer .logo_trybe{
+  width: 90%;
+  margin: auto;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+footer .logo_trybe img{ /*Tamanho da Imagem*/
+  max-width: 110px;
+  max-height: 110px;
+  margin-top: 10px;
+}
+footer .logo_trybe .desenvolvedor{ /*Texto Desenvolvedor*/
+  font-size: .9em;
+  font-weight: 600;
+  padding: 5px;
+}
+footer .logo_trybe .icones{ /*Tamanho dos Icones*/
+  font-size: 1.3em;
+  padding-top: 5px;
+}
+footer .logo_trybe .icones .fa-brands{/*Todos os filhos exceto o primeiro filho*/
+  color: rgb(15, 163, 107);
+  margin-left: 30px;
+}
+footer .logo_trybe .icones a i:hover{ /*Atlerando a cor do icone ao passar o mouse*/
+  color: rgb(42, 17, 241);
+  transition: .5s; /*Tempo de transição*/
 }
