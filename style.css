@@ -55,25 +55,20 @@ header{
 /* Main */
 main{
   width: 90vw;
-  height: 85vh; /* Caber todos os cards na página*/
+  /*height: 85vh; /* Caber todos os cards na página*/
   margin: auto;
 }
-
 /* Página Inicial */
 #container-initial-page #container-banner{
   padding: 5px;
   height: 30vh;
   display: flex;
   justify-content: center;
-  
 }
 #carouselExampleFade {
   width: 60%;
   height: 80%;
-  
 }
-
-
 #container-initial-page #container-category{
   height: 25vh;
   display: flex;
@@ -122,14 +117,15 @@ main{
   display: flex;
 }
 /* Ofertas */
-#container-initial-page #container-ofertas{
-  height: 15vh;
-  background-color: pink;
-}
 #container-oferta-dia {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+#container-initial-page #container-ofertas{
+  height: 42vh;
+  width: 80vw;
+  border: 1px solid black;
 }
 .directions {
   border: none;
@@ -143,17 +139,66 @@ main{
 }
 #container-ofertas .card{
   width: 8rem;
-  margin: 5px;
+  margin: 10px;
   font-size: .8em;
 }
+#container-ofertas .card .card-body{
+  display: flex;
+  flex-direction: column;
+}
 
+#container-ofertas .card-body .btn{
+ margin-bottom: 5px;
+ font-size: .9em;
+}
+#container-ofertas .card .div-Description{
+  height: 5rem;
+  font-size: .9em;
+  text-align: center;
+}
+#container-ofertas .card .price-txt{
+  font-size: 1.25em;
+  font-weight: bolder;
+  text-align: center;
+}
 
-
-
-
+/* Livros */
+#container-books-geral {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
 #container-initial-page #container-books{
-  height: 15vh;
-  background-color: yellow;
+  height: 42vh;
+  width: 80vw;
+  border: 1px solid black;
+}
+#container-books {
+  display: flex;
+  justify-content: space-evenly;
+}
+#container-books .card{
+  width: 8rem;
+  margin: 10px;
+  font-size: .8em;
+}
+#container-books .card .card-body{
+  display: flex;
+  flex-direction: column;
+}
+#container-books .card-body .btn{
+ margin-bottom: 5px;
+ font-size: .9em;
+}
+#container-books .card .div-Description{
+  height: 5rem;
+  font-size: .9em;
+  text-align: center;
+}
+#container-books .card .price-txt{
+  font-size: 1.25em;
+  font-weight: bolder;
+  text-align: center;
 }
 
 
