@@ -115,22 +115,41 @@ main{
   text-align: center;
   font-weight: bold;
 }
-
 #container-initial-page #container-category #container-figures-1 {
   display: flex;
 }
 #container-initial-page #container-category #container-figures-2 {
   display: flex;
 }
-
-
-
-
-
+/* Ofertas */
 #container-initial-page #container-ofertas{
   height: 15vh;
   background-color: pink;
 }
+#container-oferta-dia {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.directions {
+  border: none;
+}
+.directions i:hover {
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.7);
+}
+#container-ofertas {
+  display: flex;
+  justify-content: space-evenly;
+}
+#container-ofertas .card{
+  width: 8rem;
+  margin: 5px;
+  font-size: .8em;
+}
+
+
+
+
 
 #container-initial-page #container-books{
   height: 15vh;

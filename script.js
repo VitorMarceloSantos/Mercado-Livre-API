@@ -11,13 +11,13 @@ const resetItems = () => { // removendo os itens, para realizar nova buscar sem 
   }
 }
 
-const searchMenu = (category) => { // realizando a busca de acordo com as opções do menu navegação
+const searchMenu = (category, local) => { // realizando a busca de acordo com as opções do menu navegação
   resetItems();
-  searchProduct(category);
+  searchProduct(category, local);
 }
 
 liNav.forEach((li) => { // adicionando o escutador de evento em cada um dos elementos do array que contém todas as linhas do menu navegacao
-  li.addEventListener('click', (e) => searchMenu(e.target.textContent));
+  li.addEventListener('click', (e) => searchMenu(e.target.textContent, "#products"));
 })
 
 
@@ -104,9 +104,9 @@ function newCard(product, local) { // criando o card(bootstrap) via java script
   );
 }
 
-const cardGroup = (products) => { // adicionando os produtos
+const cardGroup = (products, local) => { // adicionando os produtos
   products.forEach((item) => {
-    newCard(item, '#products'); // passando a localização da criação
+    newCard(item, local); // passando a localização da criação
   });
 }
 
@@ -117,12 +117,26 @@ const categoryURL = (category) => {
   // https://api.mercadolibre.com/items?ids=MLA599260060&attributes=id,price,category_id,title  - nesse formato vai pegar apenas os atributos necessarios pelo ID do produto
 }
 
-const searchProduct = async(category) => {
+const lengthResults = (local, resultsArray) => {
+  if ((local === '#container-ofertas')) { // no container de ofertas vai aparecer somente 20 produtos
+    const resultAlterado = [];
+    for (let i = 0; i < 10; i += 1) {
+      resultAlterado.push(resultsArray[i]);
+    }
+    return resultAlterado;
+  }
+  return resultsArray;
+}
+
+const searchProduct = async(category, local) => {
   const apiUrl = categoryURL(category);
   const object = await fetch(apiUrl);
   const results = await object.json();
-  const arraySearch = results.results.map((item) => { // retorna um array de objetos com as propriedades selecionadas
+  const resultsArray = results.results; // vai receber a propriedade results contendo o array com as informações dos produtos
+
+  const arraySearch = (lengthResults(local, resultsArray)).map((item) => { // retorna um array de objetos com as propriedades selecionadas
     // Limitar o tamanho da descrição do produto
+    
     const arrayTemp = (item.title).split(' ');
     const arrayFinal = arrayTemp.reduce((acc, curr, index) => {
       if(index < 6){ // o tamanho máximo é 6 palavras
@@ -132,7 +146,7 @@ const searchProduct = async(category) => {
     }, '');
     return { id: item.id,  title: arrayFinal, img: item.thumbnail, price: `R$ ${(item.price).toLocaleString('pt-br', {minimumFractionDigits: 2})}` };
   }); // map
-  cardGroup(arraySearch);
+  cardGroup(arraySearch, local);
   // console.log(results)
 }
 
@@ -140,28 +154,33 @@ const selectCategory = () => {
   btnSearch.addEventListener('click', () => {
     const textSearch = document.querySelector('#text-search').value;
     resetItems();
-    searchProduct(textSearch); // search, usuarios digitou na busca
+    searchProduct(textSearch, '#products'); // search, usuarios digitou na busca
   });
 
   document.addEventListener('keypress', function (e) { // monitora todas as teclas(keys) pressionadas
     const textSearch = document.querySelector('#text-search').value;
     if (e.key === "Enter") { // caso a key seja a tecla Enter, vai chamar a função
       resetItems();
-      searchProduct(textSearch); // search, usuarios digitou na busca
+      searchProduct(textSearch, '#products'); // search, usuarios digitou na busca
     }
   }, false);
 }
 
 // Criando as ofertas do dia
-const arrayOfertas = ['Informática','Geek','Esporte','Carros', 'Motos', 'VideoGame', 'Beleza', 'Decoração', 'Celulares', 'Eletrônicos']; // id de produtos para ser adicionado nas ofertas do dia
-const ofertas = document.querySelector('#container-ofertas');
-const random = arrayOfertas[Math.floor(Math.random()*arrayOfertas.length)]
+const searchOfertas = () => {
+  const arrayOfertas = ['Informática','Geek','Esporte','Carros', 'Motos', 'VideoGame', 'Beleza', 'Decoração', 'Celulares', 'Eletrônicos']; // id de produtos para ser adicionado nas ofertas do dia
+  const ofertas = document.querySelector('#container-ofertas');
+  const random = arrayOfertas[Math.floor(Math.random()*arrayOfertas.length)]; // seleciona uma categoria aleatóriamente
 
-searchProduct(id); 
+  searchProduct(random, '#container-ofertas'); 
+  //return random
+}
+
 
 
 window.onload = function () {
   selectCategory();
+  searchOfertas()
 }
   
 
