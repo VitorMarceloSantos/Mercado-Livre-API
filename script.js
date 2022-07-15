@@ -110,17 +110,15 @@ const cardGroup = (products) => { // adicionando os produtos
   });
 }
 
-const categoryURL = (category, apiSelect) => {
-  if (apiSelect === 'search') {
-    return `https://api.mercadolibre.com/sites/MLB/search?q=${category}`;
-  }
-  return `https://api.mercadolibre.com/items/${category}`
+const categoryURL = (category) => {
+  return `https://api.mercadolibre.com/sites/MLB/search?q=${category}`;
+  // return `https://api.mercadolibre.com/items/${category}`
   // return `https://api.mercadolibre.com/catalog_products/${category}`  - retornando as caracteristicas do produto por ID(MLB6326752);
   // https://api.mercadolibre.com/items?ids=MLA599260060&attributes=id,price,category_id,title  - nesse formato vai pegar apenas os atributos necessarios pelo ID do produto
 }
 
-const searchProduct = async(category, apiSelect) => {
-  const apiUrl = categoryURL(category, apiSelect);
+const searchProduct = async(category) => {
+  const apiUrl = categoryURL(category);
   const object = await fetch(apiUrl);
   const results = await object.json();
   const arraySearch = results.results.map((item) => { // retorna um array de objetos com as propriedades selecionadas
@@ -142,24 +140,25 @@ const selectCategory = () => {
   btnSearch.addEventListener('click', () => {
     const textSearch = document.querySelector('#text-search').value;
     resetItems();
-    searchProduct(textSearch, 'search');
+    searchProduct(textSearch); // search, usuarios digitou na busca
   });
 
   document.addEventListener('keypress', function (e) { // monitora todas as teclas(keys) pressionadas
     const textSearch = document.querySelector('#text-search').value;
     if (e.key === "Enter") { // caso a key seja a tecla Enter, vai chamar a função
       resetItems();
-      searchProduct(textSearch, 'search'); // vai passar null como parâmetro
+      searchProduct(textSearch); // search, usuarios digitou na busca
     }
   }, false);
 }
 
 // Criando as ofertas do dia
-// const arrayOfertas = ['MLB15149562','MLB1839514434','MLB1930554131','MLB17801246', 'MLB2678380325', 'MLB18522997', 'MLB18500640', 'MLB15220364', 'MLB1909880047', 'MLB1417521851']; // id de produtos para ser adicionado nas ofertas do dia
-// const ofertas = document.querySelector('#container-ofertas');
-// arrayOfertas.forEach((id) => {
-//   searchProduct(id, 'oferta'); 
-// });
+const arrayOfertas = ['Informática','Geek','Esporte','Carros', 'Motos', 'VideoGame', 'Beleza', 'Decoração', 'Celulares', 'Eletrônicos']; // id de produtos para ser adicionado nas ofertas do dia
+const ofertas = document.querySelector('#container-ofertas');
+const random = arrayOfertas[Math.floor(Math.random()*arrayOfertas.length)]
+
+searchProduct(id); 
+
 
 window.onload = function () {
   selectCategory();
