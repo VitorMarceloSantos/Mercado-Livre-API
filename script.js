@@ -1,6 +1,7 @@
-// const fetch = require('node-fetch');
 const btnSearch = document.querySelector('#btn-search');
 const liNav = document.querySelectorAll('.dropdown-item'); // selecionando todas li da navegação
+const btnLeftOfertas = document.querySelector('#arrow-left');
+const btnRightOfertas = document.querySelector('#arrow-right');
 
 const resetItems = () => { // removendo os itens, para realizar nova buscar sem a necessidade de reinicar a página
   const section = document.querySelector("#products");
@@ -118,9 +119,9 @@ const categoryURL = (category) => {
 }
 
 const lengthResults = (local, resultsArray) => {
-  if ((local === '#container-ofertas')) { // no container de ofertas vai aparecer somente 20 produtos
+  if ((local === '#container-ofertas')) { // no container de ofertas vai aparecer somente 10 produtos
     const resultAlterado = [];
-    for (let i = 0; i < 10; i += 1) {
+    for (let i = 0; i < 10; i += 1) { // quantidade de produtos = 10
       resultAlterado.push(resultsArray[i]);
     }
     return resultAlterado;
@@ -176,7 +177,31 @@ const searchOfertas = () => {
   //return random
 }
 
+// function addId() { // Adicionando Id's aos cards
+//   const ofertas = document.querySelector('#container-ofertas');
+//   const quantOfertas = (document.querySelector('#container-ofertas')).childElementCount; // quantidade de cards
+//   for (let i = 0; i < quantOfertas; i += 1) {
+//     ofertas.children[i].setAttribute('id', `Card${i}`); // adicionando id ao card
+//   }
+// }
 
+const resetItemsOfertas = () => { // removendo os itens, para realizar nova buscar sem a necessidade de reinicar a página
+  const section = document.querySelector("#container-ofertas");
+  if ( section.childElementCount > 0) {
+    while ( section.firstChild) {
+      section.removeChild(section.firstChild);
+    }
+  }
+}
+
+// Criando Carousel Ofertas
+const carouselOfertas = () => {
+  resetItemsOfertas();
+  searchOfertas();
+}
+
+btnLeftOfertas.addEventListener('click', carouselOfertas);
+btnRightOfertas.addEventListener('click', carouselOfertas);
 
 window.onload = function () {
   selectCategory();
