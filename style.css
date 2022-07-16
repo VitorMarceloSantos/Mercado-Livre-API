@@ -143,7 +143,7 @@ main{
   justify-content: space-evenly;
 }
 #container-ofertas .card{
-  width: 8rem;
+  width: 11rem;
   margin: 10px;
   font-size: .8em;
 }
@@ -162,7 +162,7 @@ main{
   text-align: center;
 }
 #container-ofertas .card .price-txt{
-  font-size: 1.25em;
+  font-size: 1.1em;
   font-weight: bolder;
   text-align: center;
 }
@@ -185,7 +185,7 @@ main{
   justify-content: space-evenly;
 }
 #container-books .card{
-  width: 8rem;
+  width: 11rem;
   margin: 10px;
   font-size: .8em;
 }
@@ -203,7 +203,7 @@ main{
   text-align: center;
 }
 #container-books .card .price-txt{
-  font-size: 1.25em;
+  font-size: 1.1em;
   font-weight: bolder;
   text-align: center;
 }
@@ -225,7 +225,7 @@ main{
   justify-content: space-evenly;
 }
 #container-games .card{
-  width: 8rem;
+  width: 11rem;
   margin: 10px;
   font-size: .8em;
 }
@@ -243,7 +243,7 @@ main{
   text-align: center;
 }
 #container-games .card .price-txt{
-  font-size: 1.25em;
+  font-size: 1.1em;
   font-weight: bolder;
   text-align: center;
 }
