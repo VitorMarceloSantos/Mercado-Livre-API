@@ -67,7 +67,7 @@ header{
   text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
 #container-options .fa-cart-shopping:hover {
-  color:#20835f;
+  color:#266DC8;
   text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
 .card:hover { /* Configurações Gerais */
@@ -103,6 +103,14 @@ main{
 .container-icons .fa-solid {
   font-size: 2em;
   padding: 5px;
+}
+.container-icons .fa-heart:hover {
+  color: red;
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+}
+.container-icons .fa-cart-plus:hover {
+  color:#266DC8;
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
 #container-initial-page #container-banner{
   padding: 5px;
