@@ -1,25 +1,12 @@
 const btnSearch = document.querySelector('#btn-search');
 const liNav = document.querySelectorAll('.dropdown-item'); // selecionando todas li da navegação
+const selectFigure = document.querySelectorAll('.select-all'); // selecionando todos desenhos/ divs / e textos
 const btnLeftOfertas = document.querySelector('#arrow-left');
 const btnRightOfertas = document.querySelector('#arrow-right');
 const btnLeftOfertasBook = document.querySelector('#arrow-left-books');
 const btnRightOfertasBook = document.querySelector('#arrow-right-books');
 const btnLeftOfertasGames = document.querySelector('#arrow-left-games');
 const btnRightOfertasGames = document.querySelector('#arrow-right-games');
-
-// Preloader
-// const preloader = (imgId) => {
-//   let i = 1;
-//   const loader = setInterval(() => {  
-//         // const img = document.querySelector(imgId);
-//         imgId.setAttribute('src', `img/spinner/preloader_${i}.png`)
-//         i += 1;
-//         if (i === 4) i = 1; // zerando a variável i
-//     },250)
-//   }
-  // clearInterval(loader);
- 
-
 
 const resetItems = () => { // removendo os itens, para realizar nova buscar sem a necessidade de reinicar a página
   const section = document.querySelector("#products");
@@ -39,6 +26,14 @@ liNav.forEach((li) => { // adicionando o escutador de evento em cada um dos elem
   li.addEventListener('click', (e) => searchMenu(e.target.textContent, "#products"));
 })
 
+const searchCategory = (category, local) => { // realizando a opção de categoria
+  resetItems();
+  searchProduct(category, local);
+}
+
+selectFigure.forEach((div) => { // adicionando o escutador de evento em cada um dos elementos do array que contém todas as linhas do menu navegacao
+  div.addEventListener('click', (e) => searchCategory(e.target.classList.item((e.target.classList).length - 1), "#products")); // selecionando a ultima classe do elemento
+})
 
 function productId(e) { // Detalhes do Produto
   const searchProduct = async(category) => {
