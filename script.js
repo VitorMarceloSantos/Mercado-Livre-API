@@ -149,8 +149,11 @@ const lengthResults = (local, resultsArray) => {
 
 const searchProduct = async(category, local) => {
   const loader = document.querySelector(local);
+
   // Criando Preloader
   const divLoader = document.createElement('div');
+  
+  
   const imgLoader = document.createElement('img');
   divLoader.setAttribute('id', 'preloader');
   imgLoader.setAttribute('id', `imgPreloader_${Math.floor(Math.random())}`); // gerando um IdAleatorio
@@ -260,7 +263,6 @@ window.onload = function () {
   searchOfertas();
   searchOfertasBook();
   searchOfertasGames();
-  preloader()
 }
   
 
