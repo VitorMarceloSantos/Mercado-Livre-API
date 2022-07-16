@@ -7,6 +7,20 @@ const btnRightOfertasBook = document.querySelector('#arrow-right-books');
 const btnLeftOfertasGames = document.querySelector('#arrow-left-games');
 const btnRightOfertasGames = document.querySelector('#arrow-right-games');
 
+// Preloader
+// const preloader = (imgId) => {
+//   let i = 1;
+//   const loader = setInterval(() => {  
+//         // const img = document.querySelector(imgId);
+//         imgId.setAttribute('src', `img/spinner/preloader_${i}.png`)
+//         i += 1;
+//         if (i === 4) i = 1; // zerando a variável i
+//     },250)
+//   }
+  // clearInterval(loader);
+ 
+
+
 const resetItems = () => { // removendo os itens, para realizar nova buscar sem a necessidade de reinicar a página
   const section = document.querySelector("#products");
   if ( section.childElementCount > 0) {
@@ -134,6 +148,24 @@ const lengthResults = (local, resultsArray) => {
 }
 
 const searchProduct = async(category, local) => {
+  const loader = document.querySelector(local);
+  // Criando Preloader
+  const divLoader = document.createElement('div');
+  const imgLoader = document.createElement('img');
+  divLoader.setAttribute('id', 'preloader');
+  imgLoader.setAttribute('id', `imgPreloader_${Math.floor(Math.random())}`); // gerando um IdAleatorio
+  imgLoader.setAttribute('src', 'img/spinner/fundo_4.png');
+  divLoader.appendChild(imgLoader);
+  loader.appendChild(divLoader);
+  // Preloader
+  let i = 1;
+  const loaderContador = setInterval(() => {  
+        // const img = document.querySelector(imgId);
+        imgLoader.setAttribute('src', `img/spinner/preloader_${i}.png`)
+        i += 1;
+        if (i === 4) i = 1; // zerando a variável i
+    },250)
+  // Fim Preloader
   const apiUrl = categoryURL(category);
   const object = await fetch(apiUrl);
   const results = await object.json();
@@ -151,6 +183,8 @@ const searchProduct = async(category, local) => {
     }, '');
     return { id: item.id,  title: arrayFinal, img: item.thumbnail, price: `R$ ${(item.price).toLocaleString('pt-br', {minimumFractionDigits: 2})}` };
   }); // map
+  divLoader.remove(); // removendo a div após a API retornar os valores
+  clearInterval(loaderContador);
   cardGroup(arraySearch, local);
   // console.log(results)
 }
@@ -226,6 +260,7 @@ window.onload = function () {
   searchOfertas();
   searchOfertasBook();
   searchOfertasGames();
+  preloader()
 }
   
 
