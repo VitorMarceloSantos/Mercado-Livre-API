@@ -58,9 +58,12 @@ header{
   cursor: pointer;
 }
 /* Preloader */
+#products #preloader {
+  margin-top: 39vh; /* Centralizar, pois o tamanho do container é 78vh */
+}
 #preloader {
   margin-top: 11vh; /* Centralizar, pois o tamanho do container é 42vh */
-}
+} 
 /* Body */
 /* Backgroun Color*/
 #container-color {
@@ -69,7 +72,6 @@ header{
 /* Main */
 main{
   width: 90vw;
-  /*height: 85vh; /* Caber todos os cards na página*/
   margin: auto;
 }
 /* Página Inicial */
@@ -321,7 +323,7 @@ main{
   justify-content: space-evenly;
 }
 #products .card{
-  width: 12rem;
+  width: 10rem;
   margin: 5px;
 }
 
@@ -354,12 +356,12 @@ main{
 #ModalEspecificacoes img{
   width: 30%;
 }
-
 /* Footer */
 footer{
-background-color: #2fc18c4b;
-box-shadow: 3px -3px 3px rgba(0, 0, 0, 0.1);
-padding: 10px;
+  height: 12vh;
+  background-color: #2fc18c4b;
+  box-shadow: 3px -3px 3px rgba(0, 0, 0, 0.1);
+  padding: 10px;
 }
 footer .logo_trybe{
   width: 90%;

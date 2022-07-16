@@ -68,6 +68,8 @@ function productId(e) { // Detalhes do Produto
 }
 
 function newCard(product, local) { // criando o card(bootstrap) via java script
+  const contProduct = document.querySelector('#products'); 
+  contProduct.style.height = 'auto'; // volta a tela ao tamanho para comportar todos os produtos, pois foi alterado para 78vh.
   const section = document.querySelector(local);
   const divCard = document.createElement("div");
   const img = document.createElement("img");
@@ -143,12 +145,15 @@ const lengthResults = (local, resultsArray) => {
 }
 
 const searchProduct = async(category, local) => {
+  if (local === '#products') { // vai ocultar a div que mostra a pagina inicial e apresentar os produtos em tela
+    const contIndex = document.querySelector('#container-initial-page');
+    const contProduct = document.querySelector('#products');
+    contProduct.style.height = '78vh';
+    contIndex.style.display = 'none';
+  }
   const loader = document.querySelector(local);
-
   // Criando Preloader
   const divLoader = document.createElement('div');
-  
-  
   const imgLoader = document.createElement('img');
   divLoader.setAttribute('id', 'preloader');
   imgLoader.setAttribute('id', `imgPreloader_${Math.floor(Math.random())}`); // gerando um IdAleatorio
