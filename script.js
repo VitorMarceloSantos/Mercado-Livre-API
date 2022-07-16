@@ -77,7 +77,10 @@ function newCard(product, local) { // criando o card(bootstrap) via java script
   const descriptionText = document.createElement('p');
   const priceText = document.createElement('p');
   // const cardTitle = document.createElement("h5");
-  const btnAdd = document.createElement('button'); // adicionar ao carrinho
+  // const btnAdd = document.createElement('button'); // adicionar ao carrinho
+  const containerIcons = document.createElement('div');
+  const iAdd = document.createElement('i'); // adicionar ao carrinho
+  const iFavority = document.createElement('i'); // adicionar aos favoritos
   const btnProductView = document.createElement('button'); // ver detalhes do produto
   const divDescription = document.createElement("div");
 
@@ -85,20 +88,27 @@ function newCard(product, local) { // criando o card(bootstrap) via java script
   divCard.classList.add("card");
   divBody.classList.add("card-body");
   img.classList.add("card-img-top");
-  btnAdd.classList.add('btn');
-  btnAdd.classList.add('btn-outline-success');
+  containerIcons.classList.add('container-icons');
+  // btnAdd.classList.add('btn');
+  //btnAdd.classList.add('btn-outline-success');
+
+  iFavority.classList.add('fa-solid');
+  iFavority.classList.add('fa-heart');
+  iAdd.classList.add('fa-solid');
+  iAdd.classList.add('fa-cart-plus');
   btnProductView.classList.add('btn');
   btnProductView.classList.add('btn-outline-info');
   divDescription.classList.add('div-Description');
   priceText.classList.add('price-txt');
 
+
   // Atribuindo valores
   img.src = product.img;
   descriptionText.textContent = product.title;
   priceText.textContent = product.price;
-  btnAdd.textContent = 'Adicionar';
+  // btnAdd.textContent = 'Adicionar';
   btnProductView.textContent = 'Detalhes';
-  btnAdd.setAttribute('type', 'button');
+  // btnAdd.setAttribute('type', 'button');
   btnProductView.setAttribute('type', 'button');
   
 
@@ -107,7 +117,10 @@ function newCard(product, local) { // criando o card(bootstrap) via java script
   divDescription.appendChild(descriptionText);
   divBody.appendChild(divDescription);
   divBody.appendChild(priceText);
-  divBody.appendChild(btnAdd);
+  containerIcons.appendChild(iFavority);
+  containerIcons.appendChild(iAdd);
+  divBody.appendChild(containerIcons);
+  // divBody.appendChild(btnAdd);
   divBody.appendChild(btnProductView);
   divCard.appendChild(divBody);
   section.appendChild(divCard);
