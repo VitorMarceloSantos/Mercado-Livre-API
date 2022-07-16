@@ -258,6 +258,11 @@ const carouselOfertasGames = () => {
 btnLeftOfertasGames.addEventListener('click', carouselOfertasGames);
 btnRightOfertasGames.addEventListener('click', carouselOfertasGames);
 
+const btnIndex = document.querySelector('#return-index'); // voltar a página inicial
+btnIndex.addEventListener('click', () => {
+  location.reload();  // Realiza o recarregamento da página
+});
+
 window.onload = function () {
   selectCategory();
   searchOfertas();
