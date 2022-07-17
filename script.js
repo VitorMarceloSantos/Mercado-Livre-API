@@ -10,13 +10,85 @@ const btnRightOfertasGames = document.querySelector('#arrow-right-games');
 const cartItems = []; // array de objtos onde será armazenado os itens do carrinho
 const favorityeItems = []; // array de objtos onde será armazenado os itens favoritos
 
+const refreshTotal = (e) => {
+  const quant = e.target.value;
+  const precoUnitario = Number(e.target.classList.item((e.target.classList).length - 1));
+ // const idPreco = document.querySelector("#`${(e.target.classList.item((e.target.classList).length - 2))}`");
+  idPreco.textContet = `R$ ${(precoUnitario * quant).toLocaleString('pt-BR', { minimumFractionDigits: 2})}`;
+}
+
+const cartShopp = () => { // função carrinho de compras
+  console.log(cartItems)
+  cartItems.forEach((item) => {
+    const cartShopping = document.querySelector('#cart-products'); // local onde será apresentado
+
+    const divContainer = document.createElement('div');
+    const img = document.createElement('img');
+    const divImg = document.createElement('div');
+    const divInformation = document.createElement('div');
+    const divQuant = document.createElement('div');
+    const textQquant = document.createElement('p');
+    const title = document.createElement('p');
+    const quantItems = document.createElement('input');
+    const priceItem = document.createElement('p');
+    const priceTotal = document.createElement('p');
+
+    //Adicionando Classes
+    divContainer.classList.add('divContainer');
+    divInformation.classList.add('divInformation');
+    divImg.classList.add('divImg');
+    priceItem.classList.add('priceItem');
+    priceItem.setAttribute('id', `item:${item.sku}`);
+    quantItems.setAttribute('type', 'number');
+    quantItems.setAttribute('value', 1);
+    quantItems.setAttribute('min', 1);
+    divQuant.classList.add('divQuant');
+
+
+    
+    // Adicionando Informações
+    img.setAttribute('src', item.img);
+    title.textContent = item.name;
+    priceItem.textContent = `R$ ${(item.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2})}`;
+    textQquant.textContent = 'Quantidade: ';
+
+    // Criando Div
+    divQuant.appendChild(textQquant);
+    divQuant.appendChild(quantItems);
+    divInformation.appendChild(title);
+    divInformation.appendChild(divQuant);
+    divImg.appendChild(img);
+    divContainer.appendChild(divImg);
+    divContainer.appendChild(divInformation);
+    divContainer.appendChild(priceItem);
+
+    // Adicionando
+    cartShopping.appendChild(divContainer);
+
+    // Adicionando Evento Input
+    quantItems.classList.add(`item:${item.sku}`);
+    quantItems.classList.add(item.preco);
+    quantItems.addEventListener('click', refreshTotal); // alterando via setas do input
+    quantItems.addEventListener('keyup', refreshTotal); // alterando usuario digintado o valor
+
+  });
+}
+// Criando Evento Btn-Cart
+const btnCart = document.querySelector('.fa-cart-shopping');
+btnCart.addEventListener('click', cartShopp);
+
+// Add LocalStorage
+const setLocalStorage = (items) => {
+  localStorage.clear();
+  localStorage.setItem('cartItems', JSON.stringify(items)); // adicionando elementos ao localStorage
+}
+
 // Buscando o produto pelo Id
 const searchItem = async (id) => {
   const result = await fetch(`https://api.mercadolibre.com/items/${id}`);
   const object = await result.json();
   return object;
 };
-
 // Adicionar Carrinho
 const addCart = async (e) => {
   const numberItems = document.querySelector('#number-item');
@@ -26,6 +98,7 @@ const addCart = async (e) => {
   // console.log(cartItems)
   numberItems.textContent = cartItems.length; // quantidade de itens adicionado ao carrinho
   numberItems.style.display = 'flex'; // alterando a propriedade
+  setLocalStorage(cartItems); // adicionando ao localStorage
 }
 
 const resetItems = () => { // removendo os itens, para realizar nova buscar sem a necessidade de reinicar a página

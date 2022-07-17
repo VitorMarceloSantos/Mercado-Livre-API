@@ -398,7 +398,7 @@ main{
   text-align: center;
 }
 #products .card .price-txt{
-  font-size: 1.25em;
+  font-size: 1.1em;
   font-weight: bolder;
   text-align: center;
 }
@@ -410,6 +410,55 @@ main{
 }
 #ModalEspecificacoes img{
   width: 30%;
+}
+/* Carrinho de Compras*/
+#cart-products {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#cart-products .divContainer {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: white;
+  border-radius: 5px;
+  margin-top: 7px;
+}
+#cart-products .divInformation {
+  width: 53%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#cart-products .divImg {
+  width: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#cart-products .divQuant {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#cart-products .divQuant p {
+  margin-right: 10px;
+}
+#cart-products .divQuant input {
+  width: 45px;
+  margin-bottom: 12px;
+}
+#cart-products .priceItem {
+  width: 13%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
 }
 /* Footer */
 footer{
