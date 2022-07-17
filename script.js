@@ -10,26 +10,46 @@ const btnRightOfertasGames = document.querySelector('#arrow-right-games');
 const cartItems = []; // array de objtos onde será armazenado os itens do carrinho
 const favorityeItems = []; // array de objtos onde será armazenado os itens favoritos
 
-// const doNotPlus = (e) => { // alterar o valor total dos produtos
 
-//   if ((e.target).checked) {
-//     const divContainer = document.getElementsByClassName(`${(e.target.id)}`);
-//     console.log(`${(e.target.id)}`)
-//     divContainer.borderRadius = '30px'
-//   } else console.log('não')
-// }
+// Calcula o Valor total do itens
+const priceTotal = () => {
+  const textPrice = document.querySelector('#text-price-total');
+  const totalPrice = cartItems.reduce((acc, curr) => {
+   if (curr.checked === true) { // verifica se o check está ativado
+    return acc + ((curr.quantidade) * (curr.preco));
+   } else return acc;
+  }, 0);
+  if ( totalPrice === undefined ) {
+    textPrice.textContent = `R$ 0,00`;
+  }else textPrice.textContent = `R$ ${totalPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2})}`;
+}
+
+const doNotPlus = (e) => { // alterar o valor total dos produtos
+   //Adicionando o checked no array de objetos
+  cartItems.forEach((item, index) => {
+    if (!(e.target).checked) {
+      const idItem = ((e.target).id).split(':')[1];
+      if (item.sku === idItem) cartItems[index].checked = false;
+    }else if ((e.target).checked) {
+      const idItem = ((e.target).id).split(':')[1];
+      if (item.sku === idItem) cartItems[index].checked = true;   
+    }  
+  })
+  priceTotal(); // atualizando o preço total
+}
 
 const refreshTotal = (e) => { // Atualizando o valor de acordo com a quantidade
   const quant = e.target.value;
-  const precoUnitario = Number(e.target.classList.item((e.target.classList).length - 1));
-  const idPreco = document.getElementById(`${(e.target.classList.item((e.target.classList).length - 2))}`);
-  idPreco.textContent = `R$ ${(precoUnitario * quant).toLocaleString('pt-BR', { minimumFractionDigits: 2})}`;
+  // const precoUnitario = Number(e.target.classList.item((e.target.classList).length - 1));
+  // const idPreco = document.getElementById(`${(e.target.classList.item((e.target.classList).length - 2))}`);
+  // idPreco.textContent = `R$ ${(precoUnitario * quant).toLocaleString('pt-BR', { minimumFractionDigits: 2})}`;
 
   //Adicionando a quantidade no array de objetos
   const idItem =  (e.target.classList.item(0)).split(':')[1]; 
   cartItems.forEach((item, index) => {
     if (item.sku === idItem) cartItems[index].quantidade = quant;
   });
+  priceTotal(); // atualizando o valor total
 }
 
 const cartShopp = () => { // função carrinho de compras
@@ -95,10 +115,8 @@ const cartShopp = () => { // função carrinho de compras
     quantItems.classList.add(item.preco);
     quantItems.addEventListener('click', refreshTotal); // alterando via setas do input
     quantItems.addEventListener('keyup', refreshTotal); // alterando usuario digintado o valor
-    //deleteItem.addEventListener('click', doNotPlus); // o produto não selecionado (checked : false), terá o blackground color alterardo, e não será somado no valor total
-
-
-
+    deleteItem.addEventListener('click', doNotPlus); // o produto não selecionado não será somado no valor total
+    priceTotal(); // atualizando o valor total
   });
 }
 // Criando Evento Btn-Cart
@@ -122,7 +140,7 @@ const addCart = async (e) => {
   const numberItems = document.querySelector('#number-item');
   const objeto = await searchItem(e.target.classList.item((e.target.classList).length - 1)); // selecionando a classe com o Id do item
   const { id, title, price, thumbnail  } = objeto; // destruturação
-  cartItems.push({sku: id, name: title, preco: price, img: thumbnail  }); // adicionando os elementos no array
+  cartItems.push({sku: id, name: title, preco: price, img: thumbnail, quantidade: 1, checked: true }); // adicionando os elementos no array
   // console.log(cartItems)
   numberItems.textContent = cartItems.length; // quantidade de itens adicionado ao carrinho
   numberItems.style.display = 'flex'; // alterando a propriedade
