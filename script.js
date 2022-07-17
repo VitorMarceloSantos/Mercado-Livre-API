@@ -7,6 +7,22 @@ const btnLeftOfertasBook = document.querySelector('#arrow-left-books');
 const btnRightOfertasBook = document.querySelector('#arrow-right-books');
 const btnLeftOfertasGames = document.querySelector('#arrow-left-games');
 const btnRightOfertasGames = document.querySelector('#arrow-right-games');
+const cartItems = []; // array de objtos onde será armazenado os itens do carrinho
+const favorityeItems = []; // array de objtos onde será armazenado os itens favoritos
+
+// Buscando o produto pelo Id
+const searchItem = async (id) => {
+  const result = await fetch(`https://api.mercadolibre.com/items/${id}`);
+  const object = await result.json();
+  return object;
+};
+
+// Adicionar Carrinho
+const addCart = async (e) => {
+  const objeto = await searchItem(e.target.classList.item((e.target.classList).length - 1)); // selecionando a classe com o Id do item
+  console.log(objeto)
+  //cartItems.push({'id': id, 'name': name, 'price': price, 'img': img }); // adicionando os elementos no array
+}
 
 const resetItems = () => { // removendo os itens, para realizar nova buscar sem a necessidade de reinicar a página
   const section = document.querySelector("#products");
@@ -94,8 +110,10 @@ function newCard(product, local) { // criando o card(bootstrap) via java script
 
   iFavority.classList.add('fa-solid');
   iFavority.classList.add('fa-heart');
+  iFavority.classList.add(product.id); // adicionando o id como classe
   iAdd.classList.add('fa-solid');
   iAdd.classList.add('fa-cart-plus');
+  iAdd.classList.add(product.id); // adicionando o id como classe
   btnProductView.classList.add('btn');
   btnProductView.classList.add('btn-outline-info');
   divDescription.classList.add('div-Description');
@@ -128,9 +146,8 @@ function newCard(product, local) { // criando o card(bootstrap) via java script
  
   btnProductView.setAttribute('id',product.id); // o botão detalhes recebe o id do produto
   // Adicionando Eventos a botões
-  btnProductView.addEventListener('click', productId,
-    
-  );
+  btnProductView.addEventListener('click', productId,);
+  iAdd.addEventListener('click', addCart);
 }
 
 const cardGroup = (products, local) => { // adicionando os produtos
