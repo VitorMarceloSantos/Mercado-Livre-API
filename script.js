@@ -142,6 +142,10 @@ btnCart.addEventListener('click', () => {
       cartShopping.removeChild(cartShopping.firstChild);
     }
   }
+  const initialPage = document.querySelector('#container-initial-page');
+  const products = document.querySelector('#container-products');
+  initialPage.style.display = 'none';
+  products.style.display = 'none';
   cartShopp();
 });
 
@@ -184,7 +188,7 @@ liNav.forEach((li) => { // adicionando o escutador de evento em cada um dos elem
   li.addEventListener('click', (e) => searchMenu(e.target.textContent, "#products"));
 })
 
-const searchCategory = (category, local) => { // realizando a opção de categoria
+const searchCategory = (category, local) => { // realizando a opção de categoria 
   resetItems();
   searchProduct(category, local);
 }
@@ -317,6 +321,10 @@ const lengthResults = (local, resultsArray) => {
 }
 
 const searchProduct = async(category, local) => {
+  const cart = document.querySelector('#container-cart-shopp');
+  cart.style.display = 'none';
+  const products = document.querySelector("#container-products");
+  products.style.display = 'block';
   if (local === '#products') { // vai ocultar a div que mostra a pagina inicial e apresentar os produtos em tela
     const contIndex = document.querySelector('#container-initial-page');
     const contProduct = document.querySelector('#products');
@@ -361,7 +369,6 @@ const searchProduct = async(category, local) => {
   divLoader.remove(); // removendo a div após a API retornar os valores
   clearInterval(loaderContador);
   cardGroup(arraySearch, local);
-  // console.log(results)
 }
 
 const selectCategory = () => {
