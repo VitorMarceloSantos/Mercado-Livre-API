@@ -10,15 +10,30 @@ const btnRightOfertasGames = document.querySelector('#arrow-right-games');
 const cartItems = []; // array de objtos onde será armazenado os itens do carrinho
 const favorityeItems = []; // array de objtos onde será armazenado os itens favoritos
 
-const refreshTotal = (e) => {
+// const doNotPlus = (e) => { // alterar o valor total dos produtos
+
+//   if ((e.target).checked) {
+//     const divContainer = document.getElementsByClassName(`${(e.target.id)}`);
+//     console.log(`${(e.target.id)}`)
+//     divContainer.borderRadius = '30px'
+//   } else console.log('não')
+// }
+
+const refreshTotal = (e) => { // Atualizando o valor de acordo com a quantidade
   const quant = e.target.value;
   const precoUnitario = Number(e.target.classList.item((e.target.classList).length - 1));
- // const idPreco = document.querySelector("#`${(e.target.classList.item((e.target.classList).length - 2))}`");
-  idPreco.textContet = `R$ ${(precoUnitario * quant).toLocaleString('pt-BR', { minimumFractionDigits: 2})}`;
+  const idPreco = document.getElementById(`${(e.target.classList.item((e.target.classList).length - 2))}`);
+  idPreco.textContent = `R$ ${(precoUnitario * quant).toLocaleString('pt-BR', { minimumFractionDigits: 2})}`;
+
+  //Adicionando a quantidade no array de objetos
+  const idItem =  (e.target.classList.item(0)).split(':')[1]; 
+  cartItems.forEach((item, index) => {
+    if (item.sku === idItem) cartItems[index].quantidade = quant;
+  });
 }
 
 const cartShopp = () => { // função carrinho de compras
-  console.log(cartItems)
+  // console.log(cartItems)
   cartItems.forEach((item) => {
     const cartShopping = document.querySelector('#cart-products'); // local onde será apresentado
 
@@ -31,7 +46,9 @@ const cartShopp = () => { // função carrinho de compras
     const title = document.createElement('p');
     const quantItems = document.createElement('input');
     const priceItem = document.createElement('p');
-    const priceTotal = document.createElement('p');
+    const deleteItem = document.createElement('input');
+    const textCheck = document.createElement('label');
+    const containerCheck = document.createElement('div');
 
     //Adicionando Classes
     divContainer.classList.add('divContainer');
@@ -43,16 +60,24 @@ const cartShopp = () => { // função carrinho de compras
     quantItems.setAttribute('value', 1);
     quantItems.setAttribute('min', 1);
     divQuant.classList.add('divQuant');
-
-
+    containerCheck.classList.add('container-check');
     
     // Adicionando Informações
     img.setAttribute('src', item.img);
     title.textContent = item.name;
     priceItem.textContent = `R$ ${(item.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2})}`;
     textQquant.textContent = 'Quantidade: ';
+    deleteItem.setAttribute('type', 'checkbox');
+    deleteItem.setAttribute('id', `check:${item.sku}`);
+    deleteItem.classList.add('checkbox');
+    textCheck.setAttribute('for', `check:${item.sku}`);
+    textCheck.textContent = 'Selecionar';
+    deleteItem.setAttribute('checked', 'true')
 
     // Criando Div
+    containerCheck.appendChild(deleteItem);
+    containerCheck.appendChild(textCheck);
+    divContainer.appendChild(containerCheck);
     divQuant.appendChild(textQquant);
     divQuant.appendChild(quantItems);
     divInformation.appendChild(title);
@@ -70,6 +95,9 @@ const cartShopp = () => { // função carrinho de compras
     quantItems.classList.add(item.preco);
     quantItems.addEventListener('click', refreshTotal); // alterando via setas do input
     quantItems.addEventListener('keyup', refreshTotal); // alterando usuario digintado o valor
+    //deleteItem.addEventListener('click', doNotPlus); // o produto não selecionado (checked : false), terá o blackground color alterardo, e não será somado no valor total
+
+
 
   });
 }
