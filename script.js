@@ -10,6 +10,14 @@ const btnRightOfertasGames = document.querySelector('#arrow-right-games');
 const cartItems = []; // array de objtos onde será armazenado os itens do carrinho
 const favorityeItems = []; // array de objtos onde será armazenado os itens favoritos
 
+// Atualizando quantidade cart
+const refreshCart = () => {
+  const numberItems = document.querySelector('#number-item');
+  numberItems.textContent = cartItems.reduce((acc, curr) => {
+    return acc + Number(curr.quantidade);
+  }, 0); // quantidade de itens adicionado ao carrinho
+  numberItems.style.display = 'flex'; // alterando a propriedade
+}
 
 // Calcula o Valor total do itens
 const priceTotal = () => {
@@ -34,7 +42,8 @@ const doNotPlus = (e) => { // alterar o valor total dos produtos
       const idItem = ((e.target).id).split(':')[1];
       if (item.sku === idItem) cartItems[index].checked = true;   
     }  
-  })
+  });
+  refreshCart(); // atualizando cart
   priceTotal(); // atualizando o preço total
 }
 
@@ -50,6 +59,7 @@ const refreshTotal = (e) => { // Atualizando o valor de acordo com a quantidade
     if (item.sku === idItem) cartItems[index].quantidade = quant;
   });
   priceTotal(); // atualizando o valor total
+  refreshCart();
 }
 
 const cartShopp = () => { // função carrinho de compras
@@ -137,14 +147,11 @@ const searchItem = async (id) => {
 };
 // Adicionar Carrinho
 const addCart = async (e) => {
-  const numberItems = document.querySelector('#number-item');
   const objeto = await searchItem(e.target.classList.item((e.target.classList).length - 1)); // selecionando a classe com o Id do item
   const { id, title, price, thumbnail  } = objeto; // destruturação
   cartItems.push({sku: id, name: title, preco: price, img: thumbnail, quantidade: 1, checked: true }); // adicionando os elementos no array
-  // console.log(cartItems)
-  numberItems.textContent = cartItems.length; // quantidade de itens adicionado ao carrinho
-  numberItems.style.display = 'flex'; // alterando a propriedade
   setLocalStorage(cartItems); // adicionando ao localStorage
+  refreshCart();
 }
 
 const resetItems = () => { // removendo os itens, para realizar nova buscar sem a necessidade de reinicar a página
