@@ -7,7 +7,7 @@ const btnLeftOfertasBook = document.querySelector('#arrow-left-books');
 const btnRightOfertasBook = document.querySelector('#arrow-right-books');
 const btnLeftOfertasGames = document.querySelector('#arrow-left-games');
 const btnRightOfertasGames = document.querySelector('#arrow-right-games');
-const cartItems = []; // array de objtos onde será armazenado os itens do carrinho
+let cartItems = []; // array de objtos onde será armazenado os itens do carrinho
 const favorityeItems = []; // array de objtos onde será armazenado os itens favoritos
 
 // Atualizando quantidade cart
@@ -63,7 +63,11 @@ const refreshTotal = (e) => { // Atualizando o valor de acordo com a quantidade
 }
 
 const cartShopp = () => { // função carrinho de compras
-  // console.log(cartItems)
+  const cart = document.querySelector('#container-cart-shopp');
+  cart.style.display = 'flex';
+  const index = document.querySelector('#container-initial-page');
+  index.style.display = 'none';
+
   cartItems.forEach((item) => {
     const cartShopping = document.querySelector('#cart-products'); // local onde será apresentado
 
@@ -131,7 +135,15 @@ const cartShopp = () => { // função carrinho de compras
 }
 // Criando Evento Btn-Cart
 const btnCart = document.querySelector('.fa-cart-shopping');
-btnCart.addEventListener('click', cartShopp);
+btnCart.addEventListener('click', () => {
+  const cartShopping = document.querySelector('#cart-products'); // local onde será apresentado
+  if (cartShopping.childElementCount > 0) {
+    while ( cartShopping.firstChild) {
+      cartShopping.removeChild(cartShopping.firstChild);
+    }
+  }
+  cartShopp();
+});
 
 // Add LocalStorage
 const setLocalStorage = (items) => {
@@ -421,6 +433,32 @@ btnRightOfertasGames.addEventListener('click', carouselOfertasGames);
 const btnIndex = document.querySelector('#return-index'); // voltar a página inicial
 btnIndex.addEventListener('click', () => {
   location.reload();  // Realiza o recarregamento da página
+});
+
+const btnReturnIndex = document.querySelector('#btn-return-index'); // voltar a página inicial
+btnReturnIndex.addEventListener('click', () => {
+  // location.reload();  // Realiza o recarregamento da página
+  const cart = document.querySelector('#container-cart-shopp');
+  cart.style.display = 'none';
+  const index = document.querySelector('#container-initial-page');
+  index.style.display = 'block';
+});
+
+const btnEraseCart = document.querySelector('#btn-erase-cart');
+btnEraseCart.addEventListener('click', () => {
+  if ( cartItems.length > 0) {
+    const section = document.querySelector("#cart-products");
+    while ( section.firstChild) {
+      section.removeChild(section.firstChild);
+    }
+  }
+  localStorage.clear();
+  cartItems = [];
+  const numberItems = document.querySelector('#number-item');
+  numberItems.textContent = 0; // quantidade de itens adicionado ao carrinho
+  numberItems.style.display = 'none'; // alterando a propriedade
+  const textPrice = document.querySelector('#text-price-total');
+  textPrice.textContent = `R$ 0,00`;
 });
 
 window.onload = function () {

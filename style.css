@@ -414,7 +414,7 @@ main{
 /* Carrinho de Compras*/
 #container-cart-shopp {
   height: 80vh;
-  display: flex;
+  display: none;
   flex-direction: column;
 }
 #container-cart-shopp #cart-total {
