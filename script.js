@@ -19,9 +19,13 @@ const searchItem = async (id) => {
 
 // Adicionar Carrinho
 const addCart = async (e) => {
+  const numberItems = document.querySelector('#number-item');
   const objeto = await searchItem(e.target.classList.item((e.target.classList).length - 1)); // selecionando a classe com o Id do item
-  console.log(objeto)
-  //cartItems.push({'id': id, 'name': name, 'price': price, 'img': img }); // adicionando os elementos no array
+  const { id, title, price, thumbnail  } = objeto; // destruturação
+  cartItems.push({sku: id, name: title, preco: price, img: thumbnail  }); // adicionando os elementos no array
+  // console.log(cartItems)
+  numberItems.textContent = cartItems.length; // quantidade de itens adicionado ao carrinho
+  numberItems.style.display = 'flex'; // alterando a propriedade
 }
 
 const resetItems = () => { // removendo os itens, para realizar nova buscar sem a necessidade de reinicar a página
