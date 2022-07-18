@@ -18,6 +18,14 @@ const refreshCart = () => {
   }, 0); // quantidade de itens adicionado ao carrinho
   numberItems.style.display = 'flex'; // alterando a propriedade
 }
+// Atualizando quantidade cart Favorite
+const refreshCartFavorite = () => {
+  const numberItems = document.querySelector('#number-favorite');
+  numberItems.textContent = favoriteItems.reduce((acc, curr) => {
+    return acc + Number(curr.quantidade);
+  }, 0); // quantidade de itens adicionado ao carrinho
+  numberItems.style.display = 'flex'; // alterando a propriedade
+}
 
 // Calcula o Valor total do itens
 const priceTotal = () => {
@@ -47,6 +55,20 @@ const doNotPlus = (e) => { // alterar o valor total dos produtos
   priceTotal(); // atualizando o preço total
 }
 
+const doNotFavorite = (e) => { // alterar o status do favorito
+  //Adicionando o checked no array de objetos
+ favoriteItems.forEach((item, index) => {
+   if (!(e.target).checked) {
+     const idItem = ((e.target).id).split(':')[1];
+     if (item.sku === idItem) favoriteItems[index].checked = false;
+   }else if ((e.target).checked) {
+     const idItem = ((e.target).id).split(':')[1];
+     if (item.sku === idItem) favoriteItems[index].checked = true;   
+   }  
+ });
+ refreshCartFavorite(); // atualizando cart
+}
+
 const refreshTotal = (e) => { // Atualizando o valor de acordo com a quantidade
   const quant = e.target.value;
   // const precoUnitario = Number(e.target.classList.item((e.target.classList).length - 1));
@@ -62,13 +84,27 @@ const refreshTotal = (e) => { // Atualizando o valor de acordo com a quantidade
   refreshCart();
 }
 
-const cartShopp = (container1, container2) => { // função carrinho de compras / favoritos
+const refreshTotalFavorite = (e) => { // Atualizando o valor de acordo com a quantidade
+  const quant = e.target.value;
+  // const precoUnitario = Number(e.target.classList.item((e.target.classList).length - 1));
+  // const idPreco = document.getElementById(`${(e.target.classList.item((e.target.classList).length - 2))}`);
+  // idPreco.textContent = `R$ ${(precoUnitario * quant).toLocaleString('pt-BR', { minimumFractionDigits: 2})}`;
+
+  //Adicionando a quantidade no array de objetos
+  const idItem =  (e.target.classList.item(0)).split(':')[1]; 
+  favoriteItems.forEach((item, index) => {
+    if (item.sku === idItem) favoriteItems[index].quantidade = quant;
+  });
+  refreshCartFavorite();
+}
+
+const cartShopp = (container1, container2, array) => { // função carrinho de compras / favoritos
   const cart = document.querySelector(container1);
   cart.style.display = 'flex';
   const index = document.querySelector('#container-initial-page');
   index.style.display = 'none';
 
-  cartItems.forEach((item) => {
+  array.forEach((item) => {
     const cartShopping = document.querySelector(container2); // local onde será apresentado
 
     const divContainer = document.createElement('div');
@@ -123,14 +159,21 @@ const cartShopp = (container1, container2) => { // função carrinho de compras 
 
     // Adicionando
     cartShopping.appendChild(divContainer);
-
-    // Adicionando Evento Input
     quantItems.classList.add(`item:${item.sku}`);
     quantItems.classList.add(item.preco);
-    quantItems.addEventListener('click', refreshTotal); // alterando via setas do input
-    quantItems.addEventListener('keyup', refreshTotal); // alterando usuario digintado o valor
-    deleteItem.addEventListener('click', doNotPlus); // o produto não selecionado não será somado no valor total
-    priceTotal(); // atualizando o valor total
+
+    if (container1 === '#container-cart-shopp') { // Eventos somente para o carrinho de compra
+      // Adicionando Evento Input
+      quantItems.addEventListener('click', refreshTotal); // alterando via setas do input
+      quantItems.addEventListener('keyup', refreshTotal); // alterando usuario digintado o valor
+      deleteItem.addEventListener('click', doNotPlus); // o produto não selecionado não será somado no valor total
+      priceTotal(); // atualizando o valor total
+    }else {
+      quantItems.addEventListener('click', refreshTotalFavorite); // alterando via setas do input
+      quantItems.addEventListener('keyup', refreshTotalFavorite); // alterando usuario digintado o valor
+      deleteItem.addEventListener('click', doNotFavorite); // o produto não selecionado não será somado no valor total
+    }
+   
   });
 }
 // Criando Evento Btn-Cart
@@ -146,12 +189,12 @@ btnCart.addEventListener('click', () => {
   const products = document.querySelector('#container-products');
   initialPage.style.display = 'none';
   products.style.display = 'none';
-  cartShopp('#container-cart-shopp', '#cart-products');
+  cartShopp('#container-cart-shopp', '#cart-products', cartItems);
 });
 
 // Criando Evento Btn-Favorite
 const btnFavorite = document.querySelector('.fa-heart');
-btnCart.addEventListener('click', () => {
+btnFavorite.addEventListener('click', () => {
   const cartFavorite = document.querySelector('#cart-products-favorite'); // local onde será apresentado
   if (cartFavorite.childElementCount > 0) {
     while ( cartFavorite.firstChild) {
@@ -162,7 +205,7 @@ btnCart.addEventListener('click', () => {
   const products = document.querySelector('#container-products');
   initialPage.style.display = 'none';
   products.style.display = 'none';
-  cartShopp('#container-cart-favorite', '#cart-products-favorite');
+  cartShopp('#container-cart-favorite', '#cart-products-favorite', favoriteItems);
 });
 
 // Add LocalStorageCart
@@ -196,7 +239,7 @@ const addCartFavorite = async (e) => {
   const { id, title, price, thumbnail  } = objeto; // destruturação
   favoriteItems.push({sku: id, name: title, preco: price, img: thumbnail, quantidade: 1, checked: true }); // adicionando os elementos no array
   setLocalStorageFavorite(favoriteItems); // adicionando ao localStorage
-  // refreshCart();
+  refreshCartFavorite();
 }
 
 const resetItems = () => { // removendo os itens, para realizar nova buscar sem a necessidade de reinicar a página
@@ -389,7 +432,6 @@ const searchProduct = async(category, local) => {
 
   const arraySearch = (lengthResults(local, resultsArray)).map((item) => { // retorna um array de objetos com as propriedades selecionadas
     // Limitar o tamanho da descrição do produto
-    
     const arrayTemp = (item.title).split(' ');
     const arrayFinal = arrayTemp.reduce((acc, curr, index) => {
       if(index < 6){ // o tamanho máximo é 6 palavras
