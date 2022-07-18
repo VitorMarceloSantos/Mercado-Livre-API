@@ -180,6 +180,8 @@ btnCart.addEventListener('click', () => {
   const products = document.querySelector('#container-products');
   initialPage.style.display = 'none';
   products.style.display = 'none';
+  const cartFavorite = document.querySelector('#container-cart-favorite');
+  cartFavorite.style.display = 'none';
   cartShopp('#container-cart-shopp', '#cart-products', cartItems);
 });
 
@@ -196,6 +198,8 @@ btnFavorite.addEventListener('click', () => {
   const products = document.querySelector('#container-products');
   initialPage.style.display = 'none';
   products.style.display = 'none';
+  const cart = document.querySelector('#container-cart-shopp');
+  cart.style.display = 'none';
   cartShopp('#container-cart-favorite', '#cart-products-favorite', favoriteItems);
 });
 
