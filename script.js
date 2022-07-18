@@ -8,7 +8,7 @@ const btnRightOfertasBook = document.querySelector('#arrow-right-books');
 const btnLeftOfertasGames = document.querySelector('#arrow-left-games');
 const btnRightOfertasGames = document.querySelector('#arrow-right-games');
 let cartItems = []; // array de objtos onde será armazenado os itens do carrinho
-const favorityeItems = []; // array de objtos onde será armazenado os itens favoritos
+const favoriteItems = []; // array de objtos onde será armazenado os itens favoritos
 
 // Atualizando quantidade cart
 const refreshCart = () => {
@@ -62,14 +62,14 @@ const refreshTotal = (e) => { // Atualizando o valor de acordo com a quantidade
   refreshCart();
 }
 
-const cartShopp = () => { // função carrinho de compras
-  const cart = document.querySelector('#container-cart-shopp');
+const cartShopp = (container1, container2) => { // função carrinho de compras / favoritos
+  const cart = document.querySelector(container1);
   cart.style.display = 'flex';
   const index = document.querySelector('#container-initial-page');
   index.style.display = 'none';
 
   cartItems.forEach((item) => {
-    const cartShopping = document.querySelector('#cart-products'); // local onde será apresentado
+    const cartShopping = document.querySelector(container2); // local onde será apresentado
 
     const divContainer = document.createElement('div');
     const img = document.createElement('img');
@@ -146,13 +146,34 @@ btnCart.addEventListener('click', () => {
   const products = document.querySelector('#container-products');
   initialPage.style.display = 'none';
   products.style.display = 'none';
-  cartShopp();
+  cartShopp('#container-cart-shopp', '#cart-products');
 });
 
-// Add LocalStorage
+// Criando Evento Btn-Favorite
+const btnFavorite = document.querySelector('.fa-heart');
+btnCart.addEventListener('click', () => {
+  const cartFavorite = document.querySelector('#cart-products-favorite'); // local onde será apresentado
+  if (cartFavorite.childElementCount > 0) {
+    while ( cartFavorite.firstChild) {
+      cartFavorite.removeChild(cartFavorite.firstChild);
+    }
+  }
+  const initialPage = document.querySelector('#container-initial-page');
+  const products = document.querySelector('#container-products');
+  initialPage.style.display = 'none';
+  products.style.display = 'none';
+  cartShopp('#container-cart-favorite', '#cart-products-favorite');
+});
+
+// Add LocalStorageCart
 const setLocalStorage = (items) => {
   localStorage.clear();
   localStorage.setItem('cartItems', JSON.stringify(items)); // adicionando elementos ao localStorage
+}
+// Add LocalStorageFavorite
+const setLocalStorageFavorite = (items) => {
+  localStorage.clear();
+  localStorage.setItem('cartFavorite', JSON.stringify(items)); // adicionando elementos ao localStorage
 }
 
 // Buscando o produto pelo Id
@@ -168,6 +189,14 @@ const addCart = async (e) => {
   cartItems.push({sku: id, name: title, preco: price, img: thumbnail, quantidade: 1, checked: true }); // adicionando os elementos no array
   setLocalStorage(cartItems); // adicionando ao localStorage
   refreshCart();
+}
+// Adicionar Favorito
+const addCartFavorite = async (e) => {
+  const objeto = await searchItem(e.target.classList.item((e.target.classList).length - 1)); // selecionando a classe com o Id do item
+  const { id, title, price, thumbnail  } = objeto; // destruturação
+  favoriteItems.push({sku: id, name: title, preco: price, img: thumbnail, quantidade: 1, checked: true }); // adicionando os elementos no array
+  setLocalStorageFavorite(favoriteItems); // adicionando ao localStorage
+  // refreshCart();
 }
 
 const resetItems = () => { // removendo os itens, para realizar nova buscar sem a necessidade de reinicar a página
@@ -254,8 +283,11 @@ function newCard(product, local) { // criando o card(bootstrap) via java script
   // btnAdd.classList.add('btn');
   //btnAdd.classList.add('btn-outline-success');
 
+
   iFavority.classList.add('fa-solid');
-  iFavority.classList.add('fa-heart');
+  //iFavority.classList.add('fa-heart');
+  iFavority.classList.add('fa-heart-circle-plus');
+
   iFavority.classList.add(product.id); // adicionando o id como classe
   iAdd.classList.add('fa-solid');
   iAdd.classList.add('fa-cart-plus');
@@ -294,6 +326,7 @@ function newCard(product, local) { // criando o card(bootstrap) via java script
   // Adicionando Eventos a botões
   btnProductView.addEventListener('click', productId,);
   iAdd.addEventListener('click', addCart);
+  iFavority.addEventListener('click', addCartFavorite);
 }
 
 const cardGroup = (products, local) => { // adicionando os produtos

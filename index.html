@@ -70,6 +70,7 @@
       <ul class="nav justify-content-end">
         <li class="nav-item">
           <button><i class="fa-solid fa-heart"></i></button>
+          <p id="number-favorite">0</p>
         </li> 
         <li class="nav-item" id="add-number-items">
           <button><i class="fa-solid fa-cart-shopping"></i></button>
@@ -227,7 +228,27 @@
           <button type="button" class="btn btn-outline-danger" id="btn-erase-cart">Esvaziar Carrinho</button>
           <button type="button" class="btn btn-outline-success" id="btn-finish">Confirmar</button>
                </div>
+      </div>
+
+
+      <div id="container-favorite">
+        <section id="products-favorite"></section>
+      </div>
+      <div id="container-cart-favorite">
+        <div id="container-text-favorite">
+          <p>Favoritos</p>
         </div>
+        <section id="cart-products-favorite">
+        </section>
+        <button type="button" class="btn btn-outline-info" id="btn-return-index-favorite">Continuar Comprando</button>
+        <!-- <section id="cart-total">
+          <p>Valor Total dos Produtos:<p id="text-price-total">R$ 0,00</p> </p>
+        </section> -->
+        <div id="container-button-favorite">
+          <button type="button" class="btn btn-outline-danger" id="btn-erase-cart-favorite">Esvaziar Favoritos</button>
+          <button type="button" class="btn btn-outline-success" id="btn-finish-favorite">Confirmar</button>
+        </div>
+      </div>
       <!--Modal-->
       <div class="modal fade" id="Modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
