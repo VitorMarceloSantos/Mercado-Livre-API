@@ -8,7 +8,7 @@ const btnRightOfertasBook = document.querySelector('#arrow-right-books');
 const btnLeftOfertasGames = document.querySelector('#arrow-left-games');
 const btnRightOfertasGames = document.querySelector('#arrow-right-games');
 let cartItems = []; // array de objtos onde será armazenado os itens do carrinho
-const favoriteItems = []; // array de objtos onde será armazenado os itens favoritos
+let favoriteItems = []; // array de objtos onde será armazenado os itens favoritos
 
 // Atualizando quantidade cart
 const refreshCart = () => {
@@ -71,10 +71,6 @@ const doNotFavorite = (e) => { // alterar o status do favorito
 
 const refreshTotal = (e) => { // Atualizando o valor de acordo com a quantidade
   const quant = e.target.value;
-  // const precoUnitario = Number(e.target.classList.item((e.target.classList).length - 1));
-  // const idPreco = document.getElementById(`${(e.target.classList.item((e.target.classList).length - 2))}`);
-  // idPreco.textContent = `R$ ${(precoUnitario * quant).toLocaleString('pt-BR', { minimumFractionDigits: 2})}`;
-
   //Adicionando a quantidade no array de objetos
   const idItem =  (e.target.classList.item(0)).split(':')[1]; 
   cartItems.forEach((item, index) => {
@@ -86,10 +82,6 @@ const refreshTotal = (e) => { // Atualizando o valor de acordo com a quantidade
 
 const refreshTotalFavorite = (e) => { // Atualizando o valor de acordo com a quantidade
   const quant = e.target.value;
-  // const precoUnitario = Number(e.target.classList.item((e.target.classList).length - 1));
-  // const idPreco = document.getElementById(`${(e.target.classList.item((e.target.classList).length - 2))}`);
-  // idPreco.textContent = `R$ ${(precoUnitario * quant).toLocaleString('pt-BR', { minimumFractionDigits: 2})}`;
-
   //Adicionando a quantidade no array de objetos
   const idItem =  (e.target.classList.item(0)).split(':')[1]; 
   favoriteItems.forEach((item, index) => {
@@ -106,7 +98,6 @@ const cartShopp = (container1, container2, array) => { // função carrinho de c
 
   array.forEach((item) => {
     const cartShopping = document.querySelector(container2); // local onde será apresentado
-
     const divContainer = document.createElement('div');
     const img = document.createElement('img');
     const divImg = document.createElement('div');
@@ -173,9 +164,9 @@ const cartShopp = (container1, container2, array) => { // função carrinho de c
       quantItems.addEventListener('keyup', refreshTotalFavorite); // alterando usuario digintado o valor
       deleteItem.addEventListener('click', doNotFavorite); // o produto não selecionado não será somado no valor total
     }
-   
   });
 }
+
 // Criando Evento Btn-Cart
 const btnCart = document.querySelector('.fa-cart-shopping');
 btnCart.addEventListener('click', () => {
@@ -210,14 +201,47 @@ btnFavorite.addEventListener('click', () => {
 
 // Add LocalStorageCart
 const setLocalStorage = (items) => {
-  localStorage.clear();
+  localStorage.removeItem('cartItems');
   localStorage.setItem('cartItems', JSON.stringify(items)); // adicionando elementos ao localStorage
 }
+
+// Pegando LocalStorageCart
+const getLocalStorage = () => {
+  const cartItems = JSON.parse(localStorage.getItem('cartItems')); // recuperando as informações armazenada 
+  return cartItems;
+}
+
 // Add LocalStorageFavorite
 const setLocalStorageFavorite = (items) => {
-  localStorage.clear();
+  localStorage.removeItem('cartFavorite');
   localStorage.setItem('cartFavorite', JSON.stringify(items)); // adicionando elementos ao localStorage
 }
+
+// Pegando LocalStorageFavorite
+const getLocalStorageFavorite = () => {
+  const favoriteItem = JSON.parse(localStorage.getItem('cartFavorite')); // recuperando as informações armazenada 
+  return favoriteItem;
+}
+
+// Verificar Storage possui elementos
+const verifyStorage = () => { // caso seja maior que 0 é porque há itens adicionados no carrinho
+  if (getLocalStorage() !== null) { // verifica se o localStorage está vazio
+    const armazenamento = getLocalStorage();
+    armazenamento.forEach((item) => {
+      cartItems.push(item);
+    });
+    cartShopp('#container-cart-shopp', '#cart-products', cartItems);
+    refreshCart();
+  }
+  if (getLocalStorageFavorite() !== null) { // verifica se o localStorage está vazio
+    const armazenamentoFavorite = getLocalStorageFavorite();
+    armazenamentoFavorite.forEach((item) => {
+      favoriteItems.push(item);
+    });
+    cartShopp('#container-cart-favorite', '#cart-products-favorite', favoriteItems);
+    refreshCartFavorite();
+  }
+};
 
 // Buscando o produto pelo Id
 const searchItem = async (id) => {
@@ -225,6 +249,7 @@ const searchItem = async (id) => {
   const object = await result.json();
   return object;
 };
+
 // Adicionar Carrinho
 const addCart = async (e) => {
   const objeto = await searchItem(e.target.classList.item((e.target.classList).length - 1)); // selecionando a classe com o Id do item
@@ -233,6 +258,7 @@ const addCart = async (e) => {
   setLocalStorage(cartItems); // adicionando ao localStorage
   refreshCart();
 }
+
 // Adicionar Favorito
 const addCartFavorite = async (e) => {
   const objeto = await searchItem(e.target.classList.item((e.target.classList).length - 1)); // selecionando a classe com o Id do item
@@ -310,8 +336,6 @@ function newCard(product, local) { // criando o card(bootstrap) via java script
   const divBody = document.createElement("div");
   const descriptionText = document.createElement('p');
   const priceText = document.createElement('p');
-  // const cardTitle = document.createElement("h5");
-  // const btnAdd = document.createElement('button'); // adicionar ao carrinho
   const containerIcons = document.createElement('div');
   const iAdd = document.createElement('i'); // adicionar ao carrinho
   const iFavority = document.createElement('i'); // adicionar aos favoritos
@@ -323,14 +347,8 @@ function newCard(product, local) { // criando o card(bootstrap) via java script
   divBody.classList.add("card-body");
   img.classList.add("card-img-top");
   containerIcons.classList.add('container-icons');
-  // btnAdd.classList.add('btn');
-  //btnAdd.classList.add('btn-outline-success');
-
-
   iFavority.classList.add('fa-solid');
-  //iFavority.classList.add('fa-heart');
   iFavority.classList.add('fa-heart-circle-plus');
-
   iFavority.classList.add(product.id); // adicionando o id como classe
   iAdd.classList.add('fa-solid');
   iAdd.classList.add('fa-cart-plus');
@@ -339,7 +357,6 @@ function newCard(product, local) { // criando o card(bootstrap) via java script
   btnProductView.classList.add('btn-outline-info');
   divDescription.classList.add('div-Description');
   priceText.classList.add('price-txt');
-
 
   // Atribuindo valores
   img.src = product.img;
@@ -350,7 +367,6 @@ function newCard(product, local) { // criando o card(bootstrap) via java script
   // btnAdd.setAttribute('type', 'button');
   btnProductView.setAttribute('type', 'button');
   
-
   // divBody.appendChild(cardTitle);
   divCard.appendChild(img);
   divDescription.appendChild(descriptionText);
@@ -364,7 +380,6 @@ function newCard(product, local) { // criando o card(bootstrap) via java script
   divCard.appendChild(divBody);
   section.appendChild(divCard);
 
- 
   btnProductView.setAttribute('id',product.id); // o botão detalhes recebe o id do produto
   // Adicionando Eventos a botões
   btnProductView.addEventListener('click', productId,);
@@ -380,9 +395,6 @@ const cardGroup = (products, local) => { // adicionando os produtos
 
 const categoryURL = (category) => {
   return `https://api.mercadolibre.com/sites/MLB/search?q=${category}`;
-  // return `https://api.mercadolibre.com/items/${category}`
-  // return `https://api.mercadolibre.com/catalog_products/${category}`  - retornando as caracteristicas do produto por ID(MLB6326752);
-  // https://api.mercadolibre.com/items?ids=MLA599260060&attributes=id,price,category_id,title  - nesse formato vai pegar apenas os atributos necessarios pelo ID do produto
 }
 
 const lengthResults = (local, resultsArray) => {
@@ -514,12 +526,18 @@ btnRightOfertasGames.addEventListener('click', carouselOfertasGames);
 
 const btnIndex = document.querySelector('#return-index'); // voltar a página inicial
 btnIndex.addEventListener('click', () => {
-  location.reload();  // Realiza o recarregamento da página
+  // location.reload();  // Realiza o recarregamento da página
+  const cartFavorite = document.querySelector('#container-cart-favorite');
+  cartFavorite.style.display = 'none';
+  const cart = document.querySelector('#container-cart-shopp');
+  cart.style.display = 'none';
+  const index = document.querySelector('#container-initial-page');
+  index.style.display = 'block';
 });
 
+//Btns - Cart
 const btnReturnIndex = document.querySelector('#btn-return-index'); // voltar a página inicial
 btnReturnIndex.addEventListener('click', () => {
-  // location.reload();  // Realiza o recarregamento da página
   const cart = document.querySelector('#container-cart-shopp');
   cart.style.display = 'none';
   const index = document.querySelector('#container-initial-page');
@@ -534,7 +552,7 @@ btnEraseCart.addEventListener('click', () => {
       section.removeChild(section.firstChild);
     }
   }
-  localStorage.clear();
+  localStorage.removeItem('cartItems'); // remove somente o cart
   cartItems = [];
   const numberItems = document.querySelector('#number-item');
   numberItems.textContent = 0; // quantidade de itens adicionado ao carrinho
@@ -543,11 +561,36 @@ btnEraseCart.addEventListener('click', () => {
   textPrice.textContent = `R$ 0,00`;
 });
 
+//Btns - Favorite
+const btnReturnIndexFavorite = document.querySelector('#btn-return-index-favorite'); // voltar a página inicial
+btnReturnIndexFavorite.addEventListener('click', () => {
+  const cart = document.querySelector('#container-cart-favorite');
+  cart.style.display = 'none';
+  const index = document.querySelector('#container-initial-page');
+  index.style.display = 'block';
+});
+
+const btnEraseFavorite = document.querySelector('#btn-erase-cart-favorite');
+btnEraseFavorite.addEventListener('click', () => {
+  if ( favoriteItems.length > 0) {
+    const section = document.querySelector("#cart-products-favorite");
+    while ( section.firstChild) {
+      section.removeChild(section.firstChild);
+    }
+  }
+  localStorage.removeItem('cartFavorite'); // apagar somente favoritos
+  favoriteItems = [];
+  const numberItems = document.querySelector('#number-favorite');
+  numberItems.textContent = 0; // quantidade de itens adicionado ao carrinho
+  numberItems.style.display = 'none'; // alterando a propriedade
+});
+
 window.onload = function () {
   selectCategory();
   searchOfertas();
   searchOfertasBook();
   searchOfertasGames();
+  verifyStorage();
 }
   
 

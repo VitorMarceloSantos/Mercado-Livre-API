@@ -482,12 +482,9 @@ main{
   border-radius: 5px;
   padding: 10px;
 }
-#container-cart-favorite #cart-total p, #container-text {
+#container-cart-favorite #container-text-favorite {
   font-size: 1.3em;
   font-weight: bold;
-}
-#container-cart-favorite #cart-total #text-price-total {
-  font-size: 1.5em;
 }
 #container-cart-favorite #container-button-favorite {
   display: flex;
@@ -497,7 +494,7 @@ main{
 #container-cart-favorite #container-button-favorite button {
   margin: 10px 10px 40px 10px;
 }
-#btn-return-index {
+#btn-return-index-favorite {
   width: 10vw;
   margin: 10px auto;
 }
