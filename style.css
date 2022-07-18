@@ -239,7 +239,6 @@ main{
   display: flex;
   flex-direction: column;
 }
-
 #container-ofertas .card-body .btn{
  margin-bottom: 5px;
  font-size: .9em;
@@ -254,7 +253,6 @@ main{
   font-weight: bolder;
   text-align: center;
 }
-
 /* Livros */
 #container-books-geral {
   display: flex;
@@ -388,20 +386,17 @@ main{
   line-height: 5px;
   margin-bottom: 10px;
 }
-
 /* Cards */
 #products {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   padding: 40px 0px;
- 
 }
 #products .card{
   width: 10rem;
   margin: 5px;
 }
-
 #products .card .card-body{
   display: flex;
   flex-direction: column;
